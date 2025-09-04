@@ -2,7 +2,7 @@
   "metadata": {
     "name": "drxsw",
     "author": "3690",
-    "version": 2,
+    "version": 3,
     "source": "https://www.drxsw.com/",
     "regexp": "(www\\.)?drxsw.com/book.*",
     "description": "Đọc truyện trên drxsw.com",
