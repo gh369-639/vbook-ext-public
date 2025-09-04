@@ -14,4 +14,8 @@ function execute(url) {
         });
         return Response.success(chapters);
     }
+    return Response.success({
+                name: url,
+                url: url
+            })
 }
