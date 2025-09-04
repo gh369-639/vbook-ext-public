@@ -30,7 +30,7 @@ function generateFingerprintCacheKey(lines) {
 }
 
 function manageCacheAndSave(cacheKey, contentToSave) {
-    const MAX_CACHE_SIZE = 35;
+    const MAX_CACHE_SIZE = 9999;
     const CACHE_MANIFEST_KEY = "vbook_cache_manifest";
 
     try {
