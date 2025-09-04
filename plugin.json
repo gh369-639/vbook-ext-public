@@ -9,8 +9,8 @@
       "author": "369",
       "version": 64,
       "source": "https://generativelanguage.googleapis.com",
-      "path": "https://raw.githubusercontent.com/gh369-639/vb-ext-public/main/Gemini-Baidu-translate-change-model/plugin.zip",
-      "icon": "https://raw.githubusercontent.com/gh369-639/vb-ext-public/main/Gemini-Baidu-translate-change-model/icon.png",
+      "path": "https://raw.githubusercontent.com/gh369-639/vbook-ext-public/main/Gemini-Baidu-translate-change-model/plugin.zip",
+      "icon": "https://raw.githubusercontent.com/gh369-639/vbook-ext-public/main/Gemini-Baidu-translate-change-model/icon.png",
       "description": "Dịch văn bản bằng Google Gemini API với nhiều key, prompt tùy chỉnh theo thể loại và xử lý lỗi an toàn thông minh.",
       "type": "translate"
     }
