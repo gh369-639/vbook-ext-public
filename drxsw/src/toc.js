@@ -3,9 +3,8 @@ function execute(url) {
     var chapters = [];
     let response = fetch(url);
     if (response.ok){
-        let doc = fetch(url).html()
-        let el = doc.select('#chapterList .lazyrender a')
-        el.forEach(e => {
+        let doc = response.html()
+        doc.select('#chapterList .lazyrender a').forEach(e => {
             chapters.push({
                 name: e.text(),
                 url: e.attr('href'),
