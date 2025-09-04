@@ -8,7 +8,6 @@ function execute(url) {
             name: doc.select(".bookright .d_title h1").text(),
             author: doc.select(".bookright .d_title span").text(),
             cover: doc.select(".bookleft img").attr("data-src") || doc.select(".bookleft img").attr("src"),
-            ongoing: doc.select("#count").text(),
             detail: doc.select("#bookintro").text(),
             host: BASE_URL,
             suggests: [{
@@ -16,7 +15,7 @@ function execute(url) {
                 input: url,
                 script: "suggest.js"
             }]
-        });
+        })
     }
-    return null;
+    return null
 }
