@@ -1,12 +1,12 @@
 {
   "metadata": {
-    "author": "369",
+    "author": "3690",
     "description": "noDes"
   },
   "data": [
     {
       "name": "Gemini Baidu Translate change Model",
-      "author": "369",
+      "author": "3690",
       "version": 64,
       "source": "https://generativelanguage.googleapis.com",
       "path": "https://raw.githubusercontent.com/gh369-639/vbook-ext-public/main/Gemini-Baidu-translate-change-model/plugin.zip",
@@ -16,7 +16,7 @@
     },
     {
       "name": "drxsw",
-      "author": "369",
+      "author": "3690",
       "version": 1,
       "source": "https://www.drxsw.com/",
       "path": "https://raw.githubusercontent.com/gh369-639/vbook-ext-public/main/drxsw/plugin.zip",
