@@ -1,0 +1,21 @@
+{
+  "metadata": {
+    "name": "drxsw",
+    "author": "369",
+    "version": 1,
+    "source": "https://www.drxsw.com/",
+    "regexp": "(www\\.)?drxsw.com/book.*",
+    "description": "Đọc truyện trên drxsw.com",
+    "locale": "zh_CN",
+    "language": "javascript",
+    "type": "chinese_novel"
+  },
+  "script": {
+    "home": "home.js",
+    "detail": "detail.js",
+    "genre": "genre.js",
+    "search": "search.js",
+    "toc": "toc.js",
+    "chap": "chap.js"
+  }
+}

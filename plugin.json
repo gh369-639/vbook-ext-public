@@ -13,6 +13,17 @@
       "icon": "https://raw.githubusercontent.com/gh369-639/vbook-ext-public/main/Gemini-Baidu-translate-change-model/icon.png",
       "description": "Dịch văn bản bằng Google Gemini API với nhiều key, prompt tùy chỉnh theo thể loại và xử lý lỗi an toàn thông minh.",
       "type": "translate"
+    },
+    {
+      "name": "drxsw",
+      "author": "369",
+      "version": 1,
+      "source": "https://www.drxsw.com/",
+      "path": "https://raw.githubusercontent.com/gh369-639/vbook-ext-public/main/drxsw/plugin.zip",
+      "icon": "https://raw.githubusercontent.com/gh369-639/vbook-ext-public/main/drxsw/icon.png",
+      "description": "Đọc truyện trên drxsw.com",
+      "type": "chinese_novel",
+      "locale": "zh_CN"
     }
   ]
 }
