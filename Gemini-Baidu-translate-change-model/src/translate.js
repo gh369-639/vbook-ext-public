@@ -1,5 +1,10 @@
 load("language_list.js"); 
-load("apikey.js");
+var apiKeys = [];
+try {
+    if (typeof api_keys !== 'undefined' && api_keys) {
+        apiKeys = (api_keys || "").split("\n").filter(function(k) { return k.trim() !== ""; });
+    }
+} catch (e) {}
 load("prompt.js");
 load("baidutranslate.js");
 
@@ -30,7 +35,7 @@ function manageCacheAndSave(cacheKey, contentToSave) {
 
     try {
         var manifest = [];
-        var rawManifest = localStorage.getItem(CACHE_MANIFEST_KEY);
+        var rawManifest = cacheStorage.getItem(CACHE_MANIFEST_KEY);
         if (rawManifest) {
             manifest = JSON.parse(rawManifest);
         }
@@ -39,17 +44,17 @@ function manageCacheAndSave(cacheKey, contentToSave) {
             manifest.sort(function(a, b) { return a.ts - b.ts; });
             var oldestItem = manifest.shift();
             if (oldestItem) {
-                localStorage.removeItem(oldestItem.key);
+                cacheStorage.removeItem(oldestItem.key);
             }
         }
 
         manifest.push({ key: cacheKey, ts: Date.now() });
-        localStorage.setItem(CACHE_MANIFEST_KEY, JSON.stringify(manifest));
-        localStorage.setItem(cacheKey, contentToSave);
+        cacheStorage.setItem(CACHE_MANIFEST_KEY, JSON.stringify(manifest));
+        cacheStorage.setItem(cacheKey, contentToSave);
 
     } catch (e) {
         try {
-            localStorage.setItem(cacheKey, contentToSave);
+            cacheStorage.setItem(cacheKey, contentToSave);
         } catch (e2) {
         }
     }
@@ -124,7 +129,7 @@ function execute(text, from, to) {
 
     var combinedApiKeys = [].concat(apiKeys); 
     try {
-        var localKeysString = localStorage.getItem('vp_key_list');
+        var localKeysString = cacheStorage.getItem('vp_key_list');
         if (localKeysString) {
             var localKeys = localKeysString.split('\n')
                 .map(function(key) { return key.trim(); })
@@ -150,10 +155,10 @@ function execute(text, from, to) {
     var rotatedApiKeys = combinedApiKeys; 
     try {
         if (combinedApiKeys && combinedApiKeys.length > 1) {
-            var lastUsedIndex = parseInt(localStorage.getItem(apiKeyStorageKey) || "-1");
+            var lastUsedIndex = parseInt(cacheStorage.getItem(apiKeyStorageKey) || "-1");
             var nextIndex = (lastUsedIndex + 1) % combinedApiKeys.length;
             rotatedApiKeys = combinedApiKeys.slice(nextIndex).concat(combinedApiKeys.slice(0, nextIndex));
-            localStorage.setItem(apiKeyStorageKey, nextIndex.toString());
+            cacheStorage.setItem(apiKeyStorageKey, nextIndex.toString());
         }
     } catch (e) {
         rotatedApiKeys = combinedApiKeys;
@@ -172,17 +177,17 @@ function execute(text, from, to) {
         }
         if (isChapterContentForDelete) {
             var cacheKeyToDelete = generateFingerprintCacheKey(lines);
-            if (localStorage.getItem(cacheKeyToDelete) !== null) {
-                localStorage.removeItem(cacheKeyToDelete);
+            if (cacheStorage.getItem(cacheKeyToDelete) !== null) {
+                cacheStorage.removeItem(cacheKeyToDelete);
                 const CACHE_MANIFEST_KEY = "vbook_cache_manifest";
                 try {
-                    var rawManifest = localStorage.getItem(CACHE_MANIFEST_KEY);
+                    var rawManifest = cacheStorage.getItem(CACHE_MANIFEST_KEY);
                     if (rawManifest) {
                         var manifest = JSON.parse(rawManifest);
                         var updatedManifest = manifest.filter(function(item) {
                             return item.key !== cacheKeyToDelete;
                         });
-                        localStorage.setItem(CACHE_MANIFEST_KEY, JSON.stringify(updatedManifest));
+                        cacheStorage.setItem(CACHE_MANIFEST_KEY, JSON.stringify(updatedManifest));
                     }
                 } catch (e) {}
                 return Response.success("Đã xóa cache thành công." + text);
@@ -249,7 +254,7 @@ function execute(text, from, to) {
         if (!isShortTextOrList) { // Chỉ kiểm tra cache cho nội dung chương
              try {
                 cacheKey = generateFingerprintCacheKey(lines);
-                var cachedTranslation = localStorage.getItem(cacheKey);
+                var cachedTranslation = cacheStorage.getItem(cacheKey);
                 if (cachedTranslation) {
                     return Response.success(cachedTranslation);
                 }

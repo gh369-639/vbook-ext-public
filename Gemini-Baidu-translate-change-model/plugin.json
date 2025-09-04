@@ -2,7 +2,7 @@
   "metadata": {
     "name": "Gemini Baidu Translate change Model",
     "author": "3690",
-    "version": 64,
+    "version": 65,
     "source": "https://generativelanguage.googleapis.com",
     "description": "Dịch văn bản bằng Google Gemini API với nhiều key, prompt, tùy chỉnh theo thể loại và xử lý lỗi an toàn thông minh.",
     "type": "translate"
@@ -15,7 +15,11 @@
     "support_auto_detect": true,
     "max_line": 1000,
     "max_length": 50000,
-    "required_api_key": "false",
-    "support_url": "https://aistudio.google.com/app/apikey"
+    "support_url": "https://aistudio.google.com/app/apikey",
+    "api_keys": {
+      "title": "Gemini API Keys",
+      "mode": "input",
+      "format": "text"
+    }
   }
 }
