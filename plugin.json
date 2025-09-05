@@ -51,18 +51,6 @@
     "tag": "nsfw"
     },
     {
-    "name": "Truyện sexTV2",
-    "author": "3690",
-    "path": "https://raw.githubusercontent.com/gh369-639/vbook-ext-public/main/xtv2/plugin.zip",
-    "version": 14,
-    "source": "https://truyensextv2.vip",
-    "icon": "https://raw.githubusercontent.com/gh369-639/vbook-ext-public/main/xtv2/icon.png",
-    "description": "đọc truyện sex",
-    "type": "novel",
-    "locale": "vi_VN",
-    "tag": "nsfw"
-    },
-    {
     "name": "Wattpad",
     "author": "3690",
     "path": "https://raw.githubusercontent.com/gh369-639/vbook-ext-public/main/wattpad/plugin.zip",
