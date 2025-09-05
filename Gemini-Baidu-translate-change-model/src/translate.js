@@ -1,5 +1,9 @@
 load("language_list.js"); 
 var apiKeys = [];
+var temp = vb_temp;
+var topP = vb_topP;
+var topK = vb_topK;
+
 try {
     if (typeof api_keys !== 'undefined' && api_keys) {
         apiKeys = (api_keys || "").split("\n").filter(function(k) { return k.trim() !== ""; });
