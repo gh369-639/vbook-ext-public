@@ -15,6 +15,10 @@ var models = [
 ];
 var cacheableModels = ["gemini-2.5-pro", "gemini-2.5-flash-preview-05-20"];
 
+var topP = 1.0;
+var topK = 40;
+var temp = 1.0;
+
 function generateFingerprintCacheKey(lines) {
     var keyParts = "";
     var linesForId = lines.slice(0, 5); 
@@ -68,7 +72,7 @@ function callGeminiAPI(text, prompt, apiKey, model) {
     var url = "https://generativelanguage.googleapis.com/v1beta/models/" + model + ":generateContent?key=" + apiKey;
     var body = {
         "contents": [{ "role": "user", "parts": [{ "text": full_prompt }] }],
-        "generationConfig": { "temperature": 1.0, "topP": 1.0, "topK": 40, "maxOutputTokens": 65536 },
+        "generationConfig": { "temperature": temp, "topP": topP, "topK": topK, "maxOutputTokens": 65536 },
         "safetySettings": [
             { "category": "HARM_CATEGORY_HARASSMENT", "threshold": "BLOCK_NONE" },
             { "category": "HARM_CATEGORY_HATE_SPEECH", "threshold": "BLOCK_NONE" },
@@ -126,6 +130,26 @@ function execute(text, from, to) {
     if (!text || text.trim() === '') {
         return Response.success("?");
     }
+
+    try {
+        var storedTopP = localStorage.getItem('vb_topP');
+        if (storedTopP) {
+            var parsedTopP = parseFloat(storedTopP);
+            if (!isNaN(parsedTopP)) topP = parsedTopP;
+        }
+
+        var storedTopK = localStorage.getItem('vb_topK');
+        if (storedTopK) {
+            var parsedTopK = parseInt(storedTopK);
+            if (!isNaN(parsedTopK)) topK = parsedTopK;
+        }
+
+        var storedTemp = localStorage.getItem('vb_temp');
+        if (storedTemp) {
+            var parsedTemp = parseFloat(storedTemp);
+            if (!isNaN(parsedTemp)) temp = parsedTemp;
+        }
+    } catch (e) {}
 
     var combinedApiKeys = [].concat(apiKeys); 
     try {
