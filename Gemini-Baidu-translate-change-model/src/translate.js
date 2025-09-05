@@ -6,16 +6,6 @@ try {
     }
 } catch (e) {}
 
-try {
-    if (typeof temp !== 'number') temp = 1.0;
-    if (typeof topP !== 'number') topP = 0.95;
-    if (typeof topK !== 'number') topK = 20;
-} catch (e) {
-    temp = 1.0;
-    topP = 0.95;
-    topK = 20;
-}
-
 load("prompt.js");
 load("baidutranslate.js");
 
@@ -48,7 +38,7 @@ function callGeminiAPI(text, prompt, apiKey, model) {
     var url = "https://generativelanguage.googleapis.com/v1beta/models/" + model + ":generateContent?key=" + apiKey;
     var body = {
         "contents": [{ "role": "user", "parts": [{ "text": full_prompt }] }],
-        "generationConfig": { "temperature": temp, "topP": topP, "topK": topK, "maxOutputTokens": 65536 },
+        "generationConfig": { "temperature": parseFloat(temp), "topP": parseFloat(topP), "topK": parseFloat(topK), "maxOutputTokens": 65536 },
         "safetySettings": [
             { "category": "HARM_CATEGORY_HARASSMENT", "threshold": "BLOCK_NONE" },
             { "category": "HARM_CATEGORY_HATE_SPEECH", "threshold": "BLOCK_NONE" },
