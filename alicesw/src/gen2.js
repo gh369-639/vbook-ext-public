@@ -14,11 +14,8 @@ function execute(url, page) {
                 host: BASE_URL
             });
         });
-
         let nextPage = parseInt(page) + 1;
-
         return Response.success(data, nextPage.toString());
     }
-
     return null;
 }

@@ -1,0 +1,21 @@
+{
+  "metadata": {
+    "name": "Truyện sexTV2",
+    "author": "369",
+    "version": 13,
+    "source": "https://truyensextv2.cc",
+    "regexp": "(www.)?truyensextv2.*?/[^/]+/?$",
+    "description": "đọc truyện sex",
+    "locale": "vi_VN",
+    "type": "novel",
+    "language": "javascript",
+    "tag": "nsfw"
+  },
+  "script": {
+    "home": "home.js",
+    "detail": "detail.js",
+    "toc": "toc.js",
+    "genre": "genre.js",
+    "chap": "chap.js"
+  }
+}

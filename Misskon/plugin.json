@@ -1,0 +1,22 @@
+{
+  "metadata": {
+    "name": "Misskon",
+    "author": "369",
+    "version": 1,
+    "source": "https://misskon.com/",
+    "regexp": "(www.)?misskon.com/.*",
+    "description": "Xem gái trên misskon",
+    "locale": "vi_VN",
+    "language": "javascript",
+    "type": "comic",
+    "tag": "nsfw"
+  },
+  "script": {
+    "home": "home.js",
+    "genre": "genre.js",
+    "detail": "detail.js",
+    "search": "search.js",
+    "toc": "toc.js",
+    "chap": "chap.js"
+  }
+}

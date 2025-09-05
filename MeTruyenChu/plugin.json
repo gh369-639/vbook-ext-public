@@ -1,0 +1,22 @@
+{
+  "metadata": {
+    "name": "MeTruyenChu",
+    "author": "369",
+    "version": 1,
+    "source": "https://metruyenchu.com.vn/",
+    "regexp": "(www.)?metruyenchu.com.vn/[^/]+",
+    "description": "Đọc truyện trên MeTruyenChu",
+    "locale": "vi_VN",
+    "language": "javascript",
+    "type": "novel"
+  },
+  "script": {
+    "home": "home.js",
+    "detail": "detail.js",
+    "page" : "page.js",
+    "toc": "toc.js",
+    "search": "search.js",
+    "genre": "genre.js",
+    "chap": "chap.js"
+  }
+}

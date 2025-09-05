@@ -1,0 +1,22 @@
+{
+  "metadata": {
+    "name": "Wattpadfake",
+    "author": "369",
+    "version": 1,
+    "source": "https://wattpad.com.vn/",
+    "regexp": "(www.)?wattpad.com.vn/[^/]+",
+    "description": "Đọc truyện trên wattpad.com.vn",
+    "locale": "vi_VN",
+    "language": "javascript",
+    "type": "novel"
+  },
+  "script": {
+    "home": "home.js",
+    "detail": "detail.js",
+    "page" : "page.js",
+    "toc": "toc.js",
+    "search": "search.js",
+    "genre": "genre.js",
+    "chap": "chap.js"
+  }
+}

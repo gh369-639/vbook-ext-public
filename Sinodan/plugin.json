@@ -1,0 +1,21 @@
+{
+  "metadata": {
+    "name": "Sinodan",
+    "author": "369",
+    "version": 16,
+    "source": "https://www.sinodan.link/",
+    "regexp": "(www.)?sinodan.link/[^/]+",
+    "description": "Đọc truyện trên sinodan.link",
+    "locale": "zh_CN",
+    "language": "javascript",
+    "type": "novel"
+  },
+  "script": {
+    "home": "home.js",
+    "detail": "detail.js",
+    "search": "search.js",
+    "page" : "page.js",
+    "toc": "toc.js",
+    "chap": "chap.js"
+  }
+}

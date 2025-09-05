@@ -1,0 +1,22 @@
+{
+  "metadata": {
+    "name": "cosplaytele",
+    "author": "369",
+    "version": 1,
+    "source": "https://cosplaytele.com/",
+    "regexp": "(www.)?cosplaytele.com/.*",
+    "description": "Xem gái trên Cosplaytele",
+    "locale": "vi_VN",
+    "language": "javascript",
+    "type": "comic",
+    "tag": "nsfw"
+  },
+  "script": {
+    "home": "home.js",
+    "genre": "genre.js",
+    "detail": "detail.js",
+    "search": "search.js",
+    "toc": "toc.js",
+    "chap": "chap.js"
+  }
+}
