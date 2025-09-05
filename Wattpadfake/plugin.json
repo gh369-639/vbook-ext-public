@@ -1,11 +1,11 @@
 {
   "metadata": {
-    "name": "Wattpadfake",
+    "name": "WattpadVN",
     "author": "3690",
-    "version": 1,
-    "source": "https://wattpad.com.vn/",
-    "regexp": "(www.)?wattpad.com.vn/[^/]+",
-    "description": "Đọc truyện trên wattpad.com.vn",
+    "version": 2,
+    "source": "https://www.wattpadvn.com/",
+    "regexp": "(www.)?wattpadvn.com/[^/]+",
+    "description": "Đọc truyện trên wattpadvn.com",
     "locale": "vi_VN",
     "language": "javascript",
     "type": "novel"
