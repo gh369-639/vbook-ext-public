@@ -23,7 +23,20 @@
       "icon": "https://raw.githubusercontent.com/gh369-639/vbook-ext-public/main/drxsw/icon.png",
       "description": "Đọc truyện trên drxsw.com",
       "type": "chinese_novel",
-      "locale": "zh_CN"
+      "locale": "zh_CN",
+      "tag": "nsfw"
+    },
+    {
+    "name": "alicesw",
+    "author": "369",
+    "path": "https://raw.githubusercontent.com/gh369-639/vbook-ext-public/main/alicesw/plugin.zip",
+    "version": 8,
+    "source": "https://www.alicesw.com",
+    "icon": "https://raw.githubusercontent.com/gh369-639/vbook-ext-public/main/alicesw/icon.png",
+    "description": "Đọc truyện trên alicesw.com",
+    "type": "chinese_novel",
+    "locale": "zh_CN",
+    "tag": "nsfw"
     }
   ]
 }
