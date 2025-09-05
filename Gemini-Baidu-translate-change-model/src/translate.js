@@ -6,6 +6,13 @@ try {
     }
 } catch (e) {}
 
+var cacheableModels = [];
+try {
+    if (typeof modelsavecache !== 'undefined' && modelsavecache) {
+        cacheableModels = (modelsavecache || "").split("\n").filter(function(k) { return k.trim() !== ""; });
+    }
+} catch (e) {}
+
 load("prompt.js");
 load("baidutranslate.js");
 
@@ -14,7 +21,6 @@ var models = [
     "gemini-2.5-flash-preview-05-20",
     "gemini-2.5-flash-lite"
 ];
-var cacheableModels = ["gemini-2.5-pro", "gemini-2.5-flash-preview-05-20"];
 
 function generateFingerprintCacheKey(lines) {
     var keyParts = "";
@@ -139,6 +145,33 @@ function execute(text, from, to) {
 
     var lines = text.split('\n');
     
+    if (to === 'vi_xoacache') {
+        var isChapterContentForDelete = text.length >= 800;
+        if (isChapterContentForDelete) {
+            var shortLinesCountForDelete = 0;
+            if (lines.length > 0) {
+                for (var i = 0; i < lines.length; i++) {
+                    if (lines[i].length < 25) {
+                        shortLinesCountForDelete++;
+                    }
+                }
+                if ((shortLinesCountForDelete / lines.length) > 0.8) {
+                    isChapterContentForDelete = false;
+                }
+            }
+        }
+
+        if (isChapterContentForDelete) {
+            var cacheKeyToDelete = generateFingerprintCacheKey(lines);
+            if (cacheStorage.getItem(cacheKeyToDelete) !== null) {
+                cacheStorage.removeItem(cacheKeyToDelete);
+                return Response.success("Đã xóa cache của chương này thành công.\n\n" + text);
+            }
+        }
+        
+        return Response.success(text); 
+    }
+
     var isShortTextOrList = false;
     var lengthThreshold = 1000;   
     var lineLengthThreshold = 25; 
