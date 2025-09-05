@@ -2,7 +2,7 @@
   "metadata": {
     "name": "Gemini Baidu Translate change Model",
     "author": "3690",
-    "version": 73,
+    "version": 74,
     "source": "https://aistudio.google.com/apikey",
     "description": "Dịch văn bản bằng Google Gemini API với nhiều key, prompt, tùy chỉnh theo thể loại và xử lý lỗi an toàn thông minh.",
     "type": "translate"
@@ -24,19 +24,19 @@
     "temp": {
       "title": "temperature, độ tăng giảm là 0.05, (0 - 2.0)",
       "mode": "input",
-      "format": "number",
+      "format": "text",
       "default": "1"
     },
     "topP": {
       "title": "topP, độ tăng giảm là 0.05, (0 - 1.0)",
       "mode": "input",
-      "format": "number",
+      "format": "text",
       "default": "1"
     },
     "topK": {
       "title": "topK, độ tăng giảm là 1, (0 - 40)",
       "mode": "input",
-      "format": "number",
+      "format": "text",
       "default": "40"
     }
   }
