@@ -1,7 +1,7 @@
 {
   "metadata": {
     "name": "Wattpad",
-    "author": "369",
+    "author": "3690",
     "version": 1,
     "source": "https://wattpad.com",
     "regexp": "(www.)?wattpad.com/story/\\d+.*?/?$",

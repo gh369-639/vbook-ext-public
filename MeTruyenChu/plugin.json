@@ -1,7 +1,7 @@
 {
   "metadata": {
     "name": "MeTruyenChuFake",
-    "author": "369",
+    "author": "3690",
     "version": 1,
     "source": "https://metruyenchu.com.vn/",
     "regexp": "(www.)?metruyenchu.com.vn/[^/]+",

@@ -1,7 +1,7 @@
 {
   "metadata": {
     "name": "Sinodan",
-    "author": "369",
+    "author": "3690",
     "version": 16,
     "source": "https://www.sinodan.link/",
     "regexp": "(www.)?sinodan.link/[^/]+",
