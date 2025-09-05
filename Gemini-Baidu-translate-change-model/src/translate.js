@@ -85,14 +85,27 @@ function callGeminiAPI(text, prompt, apiKey, model) {
         var responseText = response.text(); 
 
         if (response.ok) {
-            var result = JSON.parse(responseText);
-            if (result.candidates && result.candidates.length > 0 && result.candidates[0].content && result.candidates[0].content.parts && result.candidates[0].content.parts.length > 0 && result.candidates[0].content.parts[0].text) {
-                return { status: "success", data: result.candidates[0].content.parts[0].text.trim() };
+        var result = JSON.parse(responseText);
+
+        if (result.candidates && result.candidates.length > 0) {
+            var candidate = result.candidates[0];
+
+            if (candidate.finishReason === "MAX_TOKENS") {
+                return { 
+                    status: "error",
+                    message: "Dịch bị cắt ngắn do đạt giới hạn token (MAX_TOKENS)." 
+                };
             }
-            if (result.promptFeedback && result.promptFeedback.blockReason) { return { status: "blocked", message: "Bị chặn bởi Safety Settings: " + result.promptFeedback.blockReason }; }
-            if (result.candidates && result.candidates.length > 0 && (!result.candidates[0].content || !result.candidates[0].content.parts)) { return { status: "blocked", message: "Bị chặn (không có nội dung trả về)." }; }
-            return { status: "error", message: "API không trả về nội dung hợp lệ. Phản hồi: " + responseText };
-        } else {
+
+            if (candidate.content && candidate.content.parts && candidate.content.parts.length > 0 && candidate.content.parts[0].text) {
+                return { status: "success", data: candidate.content.parts[0].text.trim() };
+            }
+        }
+
+        if (result.promptFeedback && result.promptFeedback.blockReason) { return { status: "blocked", message: "Bị chặn bởi Safety Settings: " + result.promptFeedback.blockReason }; }
+        if (result.candidates && result.candidates.length > 0 && (!result.candidates[0].content || !result.candidates[0].content.parts)) { return { status: "blocked", message: "Bị chặn (không có nội dung trả về)." }; }
+        return { status: "error", message: "API không trả về nội dung hợp lệ. Phản hồi: " + responseText };
+    } else {
             return { status: "key_error", message: "Lỗi HTTP " + response.status + ". Phản hồi từ server:\n" + responseText };
         }
     } catch (e) { return { status: "error", message: "Ngoại lệ Javascript: " + e.toString() }; }
@@ -105,7 +118,7 @@ function translateChunkWithApiRetry(chunkText, prompt, modelToUse, keysToTry) {
         var result = callGeminiAPI(chunkText, prompt, apiKeyToUse, modelToUse);
         
         if (result.status === "success") {
-            if ((result.data.length / chunkText.length) < 0.8) {
+            if ((result.data.length / chunkText.length) < 0.5) {
                 result.status = "short_result_error";
                 result.message = "Kết quả trả về ngắn hơn 80% so với văn bản gốc.";
             } else {
@@ -324,10 +337,10 @@ function execute(text, from, to) {
             var MIN_LAST_CHUNK_SIZE = 1000;
             if (currentModel === "gemini-2.5-pro") {
                 CHUNK_SIZE = 1500;
-                MIN_LAST_CHUNK_SIZE = 600;
+                MIN_LAST_CHUNK_SIZE = 100;
             } else if (currentModel === "gemini-2.5-flash" || currentModel === "gemini-2.5-flash-preview-05-20") {
                 CHUNK_SIZE = 2000;
-                MIN_LAST_CHUNK_SIZE = 600;
+                MIN_LAST_CHUNK_SIZE = 500;
             }; 
 
             var textChunks = [];
