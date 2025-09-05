@@ -1,9 +1,5 @@
 load("language_list.js"); 
 var apiKeys = [];
-var temp = vb_temp;
-var topP = vb_topP;
-var topK = vb_topK;
-
 try {
     if (typeof api_keys !== 'undefined' && api_keys) {
         apiKeys = (api_keys || "").split("\n").filter(function(k) { return k.trim() !== ""; });
@@ -52,6 +48,7 @@ function callGeminiAPI(text, prompt, apiKey, model) {
     try {
         var response = fetch(url, { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify(body) });
         var responseText = response.text(); 
+
         if (response.ok) {
             var result = JSON.parse(responseText);
             if (result.candidates && result.candidates.length > 0) {
@@ -81,17 +78,22 @@ function translateChunkWithApiRetry(chunkText, prompt, modelToUse, keysToTry) {
         if (result.status === "success") {
             if ((result.data.length / chunkText.length) < 0.5) {
                 result.status = "short_result_error";
-                result.message = "Kết quả trả về quá ngắn so với văn bản gốc.";
+                result.message = "Kết quả trả về ngắn hơn 50% so với văn bản gốc.";
             } else {
                 return result; 
             }
         }
+        
         keyErrors.push("  + Key " + (i + 1) + " (" + apiKeyToUse.substring(0, 4) + "...):\n    " + result.message.replace(/\n/g, '\n    '));
         if (i < keysToTry.length - 1) {
             try { sleep(100); } catch (e) {}
         }
     }
-    return { status: 'all_keys_failed', message: 'Tất cả API keys đều thất bại cho chunk này.', details: keyErrors }; 
+    return { 
+        status: 'all_keys_failed', 
+        message: 'Tất cả API keys đều thất bại cho chunk này.',
+        details: keyErrors 
+    }; 
 }
 
 function execute(text, from, to) {
@@ -103,8 +105,12 @@ function execute(text, from, to) {
     try {
         var localKeysString = cacheStorage.getItem('vp_key_list');
         if (localKeysString) {
-            var localKeys = localKeysString.split('\n').map(function(key) { return key.trim(); }).filter(function(key) { return key; }); 
-            if (localKeys.length > 0) combinedApiKeys = combinedApiKeys.concat(localKeys);
+            var localKeys = localKeysString.split('\n')
+                .map(function(key) { return key.trim(); })
+                .filter(function(key) { return key; }); 
+            if (localKeys.length > 0) {
+                combinedApiKeys = combinedApiKeys.concat(localKeys);
+            }
         }
     } catch (e) {}
     var uniqueKeys = [];
@@ -126,7 +132,9 @@ function execute(text, from, to) {
             rotatedApiKeys = combinedApiKeys.slice(nextIndex).concat(combinedApiKeys.slice(0, nextIndex));
             cacheStorage.setItem(apiKeyStorageKey, nextIndex.toString());
         }
-    } catch (e) { rotatedApiKeys = combinedApiKeys; }
+    } catch (e) {
+        rotatedApiKeys = combinedApiKeys;
+    }
 
     var lines = text.split('\n');
     
@@ -134,7 +142,8 @@ function execute(text, from, to) {
     var lengthThreshold = 1000;   
     var lineLengthThreshold = 25; 
     if (to === 'vi_vietlai') {
-        lengthThreshold = 1500; lineLengthThreshold = 50;
+        lengthThreshold = 1500;
+        lineLengthThreshold = 50;
     }
     if (text.length < lengthThreshold) {
         isShortTextOrList = true;
@@ -145,7 +154,9 @@ function execute(text, from, to) {
             for (var i = 0; i < totalLines; i++) {
                 if (lines[i].length < lineLengthThreshold) { shortLinesCount++; }
             }
-            if ((shortLinesCount / totalLines) > 0.8) isShortTextOrList = true;
+            if ((shortLinesCount / totalLines) > 0.8) {
+                isShortTextOrList = true;
+            }
         }
     }
     if (to === 'vi_vietlai' && isShortTextOrList) {
@@ -167,10 +178,14 @@ function execute(text, from, to) {
         var baiduTranslatedParts = [];
         var basicBaiduLangs = ['vi', 'zh', 'en'];
         var baiduToLang = basicBaiduLangs.indexOf(to) > -1 ? to : 'vi';
+
         for (var i = 0; i < lines.length; i += BAIDU_CHUNK_SIZE) {
-            var chunkText = lines.slice(i, i + BAIDU_CHUNK_SIZE).join('\n');
+            var currentChunkLines = lines.slice(i, i + BAIDU_CHUNK_SIZE);
+            var chunkText = currentChunkLines.join('\n');
             var translatedChunk = baiduTranslateContent(chunkText, 'auto', baiduToLang, 0); 
-            if (translatedChunk === null) return Response.error("Lỗi Baidu Translate. Vui lòng thử lại.");
+            if (translatedChunk === null) {
+                return Response.error("Lỗi Baidu Translate. Vui lòng thử lại.");
+            }
             baiduTranslatedParts.push(translatedChunk);
         }
         finalContent = baiduTranslatedParts.join('\n');
@@ -182,8 +197,12 @@ function execute(text, from, to) {
              try {
                 cacheKey = generateFingerprintCacheKey(lines);
                 var cachedTranslation = cacheStorage.getItem(cacheKey);
-                if (cachedTranslation) return Response.success(cachedTranslation);
-            } catch (e) { cacheKey = null; }
+                if (cachedTranslation) {
+                    return Response.success(cachedTranslation);
+                }
+            } catch (e) {
+                cacheKey = null;
+            }
         }
         
         var modelToUse = null;
@@ -206,31 +225,45 @@ function execute(text, from, to) {
         }
 
         var selectedPrompt = prompts[finalTo] || prompts["vi"];
+        
         var translationSuccessful = false;
         var errorLog = {};
         var modelsToIterate = useModelLoop ? models : [modelToUse];
 
         for (var m = 0; m < modelsToIterate.length; m++) {
             var currentModel = modelsToIterate[m];
-            var CHUNK_SIZE = 4000, MIN_LAST_CHUNK_SIZE = 1000;
-            if (currentModel === "gemini-2.5-pro") { CHUNK_SIZE = 1500; MIN_LAST_CHUNK_SIZE = 100; } 
-            else if (currentModel === "gemini-2.5-flash" || currentModel === "gemini-2.5-flash-preview-05-20") { CHUNK_SIZE = 2000; MIN_LAST_CHUNK_SIZE = 500; }
+            var CHUNK_SIZE = 4000;
+            var MIN_LAST_CHUNK_SIZE = 1000;
+            if (currentModel === "gemini-2.5-pro") {
+                CHUNK_SIZE = 1500; MIN_LAST_CHUNK_SIZE = 100;
+            } else if (currentModel === "gemini-2.5-flash" || currentModel === "gemini-2.5-flash-preview-05-20") {
+                CHUNK_SIZE = 2000; MIN_LAST_CHUNK_SIZE = 500;
+            }
 
             var textChunks = [];
             var currentChunk = "";
+            var currentChunkLineCount = 0;
+            const MAX_LINES_PER_CHUNK = 50;
             for (var i = 0; i < lines.length; i++) {
                 var paragraph = lines[i];
-                if ((currentChunk.length + paragraph.length + 1 > CHUNK_SIZE) && currentChunk.length > 0) {
+                if (currentChunk.length === 0 && paragraph.length >= CHUNK_SIZE) {
+                    textChunks.push(paragraph);
+                    continue;
+                }
+                if ((currentChunk.length + paragraph.length + 1 > CHUNK_SIZE || currentChunkLineCount >= MAX_LINES_PER_CHUNK) && currentChunk.length > 0 ) {
                     textChunks.push(currentChunk);
                     currentChunk = paragraph;
+                    currentChunkLineCount = 1;
                 } else {
                     currentChunk = currentChunk ? (currentChunk + "\n" + paragraph) : paragraph;
+                    currentChunkLineCount++;
                 }
             }
             if (currentChunk.length > 0) textChunks.push(currentChunk);
             if (textChunks.length > 1 && textChunks[textChunks.length - 1].length < MIN_LAST_CHUNK_SIZE) {
                 var lastChunk = textChunks.pop();
-                textChunks.push(textChunks.pop() + "\n" + lastChunk);
+                var secondLastChunk = textChunks.pop();
+                textChunks.push(secondLastChunk + "\n" + lastChunk);
             }
 
             var finalParts = [];
@@ -260,9 +293,9 @@ function execute(text, from, to) {
         } 
 
         if (!translationSuccessful) {
-            var errorString = "<<< LỖI DỊCH >>>\n";
+            var errorString = "<<<<<--- LỖI DỊCH --->>>>>\n";
             for (var modelName in errorLog) {
-                errorString += "\n- Model: " + modelName + " ---\n";
+                errorString += "\n--- Lỗi với Model: " + modelName + " ---\n";
                 if(errorLog[modelName]) errorString += errorLog[modelName].join("\n");
             }
             return Response.error(errorString);
@@ -271,7 +304,9 @@ function execute(text, from, to) {
 
     if (cacheKey && finalContent && !finalContent.includes("LỖI DỊCH")) {
         if (cacheableModels.indexOf(modelsucess) > -1 && to !== 'vi_layname') {
-            try { cacheStorage.setItem(cacheKey, finalContent.trim()); } catch (e) {}
+            try {
+                cacheStorage.setItem(cacheKey, finalContent.trim());
+            } catch (e) {}
         }
     }
     
