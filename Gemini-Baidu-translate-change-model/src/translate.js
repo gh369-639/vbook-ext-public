@@ -207,7 +207,7 @@ function execute(text, from, to) {
     }
 
     if (isShortTextOrList && !useGeminiForShortText) {
-        const BAIDU_CHUNK_SIZE = 500;
+        const BAIDU_CHUNK_SIZE = 300;
         var baiduTranslatedParts = [];
         var basicBaiduLangs = ['vi', 'zh', 'en'];
         var baiduToLang = basicBaiduLangs.indexOf(to) > -1 ? to : 'vi';
