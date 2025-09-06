@@ -8,7 +8,13 @@ try {
 var cacheableModels = [];
 try {
     if (typeof modelsavecache !== 'undefined' && modelsavecache) {
-        cacheableModels = (modelsavecache || "").split("\n").filter(function(k) { return k.trim() !== ""; });
+        cacheableModels = (modelsavecache || "").split("\n")
+            .map(function(k) { 
+                return k.trim(); 
+            })
+            .filter(function(k) { 
+                return k !== ""; 
+            });
     }
 } catch (e) {}
 
