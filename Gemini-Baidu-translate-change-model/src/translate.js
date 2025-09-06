@@ -1,21 +1,13 @@
 load("language_list.js"); 
-var apiKeys = [];
+let apiKeys = [];
 try {
     if (typeof api_keys !== 'undefined' && api_keys) {
         apiKeys = (api_keys || "").split("\n").filter(function(k) { return k.trim() !== ""; });
     }
 } catch (e) {}
-var cacheableModels = [];
+let cacheableModels = [];
 try {
-    if (typeof modelsavecache !== 'undefined' && modelsavecache) {
-        cacheableModels = (modelsavecache || "").split("\n")
-            .map(function(k) { 
-                return k.trim(); 
-            })
-            .filter(function(k) { 
-                return k !== ""; 
-            });
-    }
+    cacheableModels = (modelsavecache || "").split("\n").filter(k => k !== "");
 } catch (e) {}
 
 load("prompt.js");
