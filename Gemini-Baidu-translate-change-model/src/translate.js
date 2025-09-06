@@ -5,7 +5,6 @@ try {
         apiKeys = (api_keys || "").split("\n").filter(function(k) { return k.trim() !== ""; });
     }
 } catch (e) {}
-
 var cacheableModels = [];
 try {
     if (typeof modelsavecache !== 'undefined' && modelsavecache) {
@@ -337,7 +336,7 @@ function execute(text, from, to) {
     }
 
     if (cacheKey && finalContent && !finalContent.includes("LỖI DỊCH")) {
-        if (cacheableModels.indexOf(modelsucess) > -1 && to !== 'vi_layname') {
+        if (cacheableModels.indexOf(modelsucess.trim()) > -1 && to !== 'vi_layname') {
             try {
                 cacheStorage.setItem(cacheKey, finalContent.trim());
             } catch (e) {}
