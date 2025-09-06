@@ -5,10 +5,10 @@ try {
         apiKeys = (api_keys || "").split("\n").filter(function(k) { return k.trim() !== ""; });
     }
 } catch (e) {}
-let cacheableModels = [];
-try {
+let cacheableModels = ["gemini-2.5-pro", "gemini-2.5-flash-preview-05-20", "gemini-2.5-flash"];
+/*try {
     cacheableModels = (modelsavecache || "").split("\n").filter(k => k !== "");
-} catch (e) {}
+} catch (e) {} chưa biết lỗi ở đâu*/
 
 load("prompt.js");
 load("baidutranslate.js");
