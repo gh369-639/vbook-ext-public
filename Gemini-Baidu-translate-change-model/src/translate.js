@@ -1,14 +1,29 @@
 load("language_list.js"); 
-let apiKeys = [];
+var apiKeys = [];
 try {
     if (typeof api_keys !== 'undefined' && api_keys) {
-        apiKeys = (api_keys || "").split("\n").filter(function(k) { return k.trim() !== ""; });
+        var clean_api_keys = api_keys;
+        if (clean_api_keys.startsWith('"') && clean_api_keys.endsWith('"')) {
+            clean_api_keys = clean_api_keys.substring(1, clean_api_keys.length - 1);
+        }
+        apiKeys = (clean_api_keys || "").split('\n') 
+            .map(function(k) { return k.trim(); })
+            .filter(function(k) { return k !== ""; });
     }
 } catch (e) {}
-let cacheableModels = ["gemini-2.5-pro", "gemini-2.5-flash-preview-05-20", "gemini-2.5-flash"];
-/*try {
-    cacheableModels = (modelsavecache || "").split("\n").filter(k => k !== "");
-} catch (e) {} chưa biết lỗi ở đâu*/
+
+var cacheableModels = [];
+try {
+    if (typeof modelsavecache !== 'undefined' && modelsavecache) {
+        var clean_modelsavecache = modelsavecache;
+        if (clean_modelsavecache.startsWith('"') && clean_modelsavecache.endsWith('"')) {
+            clean_modelsavecache = clean_modelsavecache.substring(1, clean_modelsavecache.length - 1);
+        }
+        cacheableModels = (clean_modelsavecache || "").split('\n')
+            .map(function(k) { return k.trim(); })
+            .filter(function(k) { return k !== ""; });
+    }
+} catch (e) {}
 
 load("prompt.js");
 load("baidutranslate.js");
