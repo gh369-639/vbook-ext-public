@@ -174,7 +174,7 @@ function execute(text, from, to) {
     var lineLengthThreshold = 25; 
     if (to === 'vi_vietlai') {
         lengthThreshold = 1500;
-        lineLengthThreshold = 50;
+        lineLengthThreshold = 60;
     }
     if (text.length < lengthThreshold) {
         isShortTextOrList = true;
@@ -185,7 +185,7 @@ function execute(text, from, to) {
             for (var i = 0; i < totalLines; i++) {
                 if (lines[i].length < lineLengthThreshold) { shortLinesCount++; }
             }
-            if ((shortLinesCount / totalLines) > 0.8) {
+            if ((shortLinesCount / totalLines) > 0.7) {
                 isShortTextOrList = true;
             }
         }
