@@ -2,13 +2,14 @@
   "metadata": {
     "name": "alicesw",
     "author": "3690",
-    "version": 9,
+    "version": 10,
     "source": "https://www.alicesw.com/",
     "regexp": "(www\\.)?alicesw\\.com.*",
     "description": "Đọc truyện trên alicesw.com",
     "locale": "zh_CN",
     "language": "javascript",
-    "type": "chinese_novel"
+    "type": "chinese_novel",
+    "tag": "nsfw"
   },
   "script": {
     "home": "home.js",

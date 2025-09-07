@@ -2,13 +2,14 @@
   "metadata": {
     "name": "Sinodan",
     "author": "3690",
-    "version": 16,
+    "version": 17,
     "source": "https://www.sinodan.link/",
     "regexp": "(www.)?sinodan.link/[^/]+",
     "description": "Đọc truyện trên sinodan.link",
     "locale": "zh_CN",
     "language": "javascript",
-    "type": "novel"
+    "type": "novel",
+    "tag": "nsfw"
   },
   "script": {
     "home": "home.js",
