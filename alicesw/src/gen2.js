@@ -1,3 +1,4 @@
+load('config.js');
 
 function execute(url, page) {
     if (!page) page = '1';
@@ -9,7 +10,9 @@ function execute(url, page) {
         doc.select(".clearfix.rec_rullist ul").forEach(e => {
             data.push({
                 name: e.select("li.two a").text(),
-                link: e.select("li.two a").attr("href").match(/\d+/)[0],
+                link: e.select("li.two a").attr("href"),
+                description: e.select("p").text(),
+                host: BASE_URL
             });
         });
         let nextPage = parseInt(page) + 1;

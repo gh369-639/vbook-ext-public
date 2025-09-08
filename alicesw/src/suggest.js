@@ -8,7 +8,8 @@ function execute(url) {
         doc.select("ul.ranking-list div.itemr").forEach(e => {
           data.push({
             name: e.select(".info a").text(),
-            link: e.select(".info a").attr("href").match(/\d+/)[0],
+            link: e.select(".info a").attr("href"),
+            description: e.select("p").text(),
             cover: e.select("img").attr("src"),
           })
         });
