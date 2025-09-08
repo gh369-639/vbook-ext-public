@@ -1,7 +1,7 @@
 load('config.js');
 function execute(url) {    
     var browser = Engine.newBrowser();
-    browser.launch(url, 1000); 
+    browser.launch(url, 3000); 
 
     let htm = "";
     const maxTries = 5; 
