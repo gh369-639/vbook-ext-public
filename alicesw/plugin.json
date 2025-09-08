@@ -2,7 +2,7 @@
   "metadata": {
     "name": "alicesw",
     "author": "3690",
-    "version": 14,
+    "version": 15,
     "source": "https://www.alicesw.com/",
     "regexp": "(www\\.)?alicesw\\.com.*",
     "description": "Đọc truyện trên alicesw.com",
@@ -16,7 +16,6 @@
     "detail": "detail.js",
     "genre": "genre.js",
     "search": "search.js",
-    "page" : "page.js",
     "toc": "toc.js",
     "chap": "chap.js"
   }

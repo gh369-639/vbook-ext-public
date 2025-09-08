@@ -1,7 +1,8 @@
 load('config.js');
 
 function execute(url) {
-    let response = fetch(url);
+    url = url.match(/\d+/)[0];
+    let response = fetch(BASE_URL + "/novel/" + url + ".html");
     if (response.ok) {
         let doc = response.html();
         var genres = [];
@@ -21,7 +22,6 @@ function execute(url) {
             detail: doc.select(".box_info .intro").text(),
             author: doc.select(".box_info a[href*='author']").text(),
             ongoing: ongoing,
-            host: BASE_URL,
             genres: genres,
             suggests: [{
                 title: "View more",

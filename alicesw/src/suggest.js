@@ -1,4 +1,3 @@
-load('config.js');
 function execute(url) {
     let response = fetch(url);
     if (response.ok) {
@@ -7,9 +6,8 @@ function execute(url) {
         doc.select("ul.ranking-list div.itemr").forEach(e => {
           data.push({
             name: e.select(".info a").text(),
-            link: e.select(".info a").attr("href"),
+            link: e.select(".info a").attr("href").match(/\d+/)[0],
             cover: e.select("img").attr("src"),
-            host: BASE_URL
           })
         });
         return Response.success(data)

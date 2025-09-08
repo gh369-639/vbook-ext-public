@@ -1,4 +1,3 @@
-load('config.js');
 function execute(url) {    
     var browser = Engine.newBrowser();
     browser.launch(url, 3000); 

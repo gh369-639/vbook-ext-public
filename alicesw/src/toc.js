@@ -1,10 +1,11 @@
 load('config.js')
 function execute(url) {
+    url = url.match(/\d+/)[0];
     var chapters = [];
-    let response = fetch(url);
+    var response = fetch(BASE_URL + "/other/chapters/id/" + url + ".html");
     if (response.ok){
-        let doc = fetch(url).html()
-        let el = doc.select('.mulu_list li a')
+        var doc = response.html()
+        var el = doc.select('.mulu_list li a')
         el.forEach(e => {
             chapters.push({
                 name: e.text(),
