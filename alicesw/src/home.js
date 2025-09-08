@@ -3,6 +3,11 @@ load('config.js');
 function execute() {
     return Response.success([
         {
+            input: BASE_URL + "/user/bookshelf/index.html",
+            title: "我的书架",
+            script: "user.js"
+        },
+        {
             input: BASE_URL + "/original.html",
             title: "原创专区",
             script: "gen2.js"
