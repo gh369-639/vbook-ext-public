@@ -2,7 +2,7 @@
   "metadata": {
     "name": "alicesw",
     "author": "3690",
-    "version": 18,
+    "version": 19,
     "source": "https://www.alicesw.com/",
     "regexp": "(www\\.)?alicesw\\.com.*",
     "description": "Đọc truyện trên alicesw.com",
