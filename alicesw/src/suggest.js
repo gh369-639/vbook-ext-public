@@ -1,5 +1,7 @@
+load('config.js');
 function execute(url) {
-    let response = fetch(url);
+    url = url.match(/\d+/)[0];
+    let response = fetch(BASE_URL + "/novel/" + url);
     if (response.ok) {
         let doc = response.html();
         var data = [];
