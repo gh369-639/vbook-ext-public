@@ -1,10 +1,10 @@
 load('config.js');
 function execute(url) {    
     var browser = Engine.newBrowser();
-    browser.launch(url, 2000); 
+    browser.launch(url, 1000); 
 
     let htm = "";
-    const maxTries = 20; 
+    const maxTries = 5; 
     const delay = 500;  
 
     for (var i = 0; i < maxTries; i++) {
