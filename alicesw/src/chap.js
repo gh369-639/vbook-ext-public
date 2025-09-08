@@ -18,9 +18,13 @@ function execute(url) {
     }
     browser.close();
 
-    if (htm && !htm.includes("正在加载小说中")) {
-        return Response.success(htm);
+    if (htm) {
+        if (!htm.includes("正在加载小说中")) {
+            return Response.success(htm);
+        } else {
+            return Response.error;
+        }
     } else {
-        return Response.success(htm);
+        return Response.error;
     }
 }
