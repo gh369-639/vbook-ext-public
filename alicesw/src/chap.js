@@ -25,6 +25,6 @@ function execute(url) {
             return Response.error;
         }
     } else {
-        return Response.error;
+        return Response.success("chap giới thiệu");
     }
 }
