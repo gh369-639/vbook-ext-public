@@ -9,7 +9,7 @@ function execute(url) {
         doc.select("tbody tr").forEach(e => {
             data.push({
                 name: e.select("td.t2 a").text(),
-                cover: doc.select("td img").attr("src") || doc.select("td img").attr("data-src"),
+                cover: e.select("img").attr("src") || e.select("img").attr("data-src"),
                 link: e.select("td.t2 a").attr("href"),
                 description: e.select("td.t3 a").text(),
                 host: BASE_URL
