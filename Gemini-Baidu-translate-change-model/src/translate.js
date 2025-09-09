@@ -33,6 +33,7 @@ try {
             if (cleanedString.startsWith('"') && cleanedString.endsWith('"')) {
                 cleanedString = cleanedString.substring(1, cleanedString.length - 1);
             }
+            cleanedString = cleanedString.replace(/'/g, '**').replace(/"/g, '**');
             return cleanedString;
         }
         return ""; 
