@@ -26,6 +26,24 @@ try {
 } catch (e) {}
 
 load("prompt.js");
+try {
+    function getCleanedConfigString(configVar) {
+        if (typeof configVar !== 'undefined' && configVar) {
+            var cleanedString = configVar;
+            if (cleanedString.startsWith('"') && cleanedString.endsWith('"')) {
+                cleanedString = cleanedString.substring(1, cleanedString.length - 1);
+            }
+            return cleanedString;
+        }
+        return ""; 
+    }
+
+    prompts['vi_tieuchuan'] = getCleanedConfigString(prompt_standard);
+    prompts['vi_sac'] = getCleanedConfigString(prompt_erotic);
+    prompts['vi_NameEng'] = getCleanedConfigString(prompt_name_eng);
+    prompts['vi_vietlai'] = getCleanedConfigString(prompt_rewrite);
+
+} catch(e) {}
 load("baidutranslate.js");
 
 var modelsucess = "";
