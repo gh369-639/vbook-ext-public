@@ -13,8 +13,8 @@ function execute(url) {
                 script: "gen.js"
             })
         });
-        let ongoing = false
-        if (doc.select(".box_info a[href*='author']").text().equals("已完结")) {ongoing = true;}
+        let ongoing = true
+        if (doc.select(".box_info a[href*='author']").text().equals("已完结")) {ongoing = false;}
 
         return Response.success({
             name: doc.select(".box_info h1").first().text(),
