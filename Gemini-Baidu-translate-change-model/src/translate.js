@@ -3,7 +3,7 @@ var apiKeys = [];
 try {
     if (typeof api_keys !== 'undefined' && api_keys) {
         var clean_api_keys = api_keys;
-        clean_api_keys = clean_api_keys.replace(/^"([\s\S]*)"$/, "$1");
+        clean_api_keys = clean_api_keys.replace(/^"([.\n]*)"$/, "$1");
         apiKeys = (clean_api_keys || "").split('\n') 
             .map(function(k) { return k.trim(); })
             .filter(function(k) { return k !== ""; });
@@ -14,7 +14,7 @@ var cacheableModels = [];
 try {
     if (typeof modelsavecache !== 'undefined' && modelsavecache) {
         var clean_modelsavecache = modelsavecache;
-        clean_modelsavecache = clean_modelsavecache.replace(/^"([\s\S]*)"$/, "$1");
+        clean_modelsavecache = clean_modelsavecache.replace(/^"([.\n]*)"$/, "$1");
         cacheableModels = (clean_modelsavecache || "").split('\n')
             .map(function(k) { return k.trim(); })
             .filter(function(k) { return k !== ""; });
@@ -26,7 +26,7 @@ try {
     function getCleanedConfigString(configVar) {
         if (typeof configVar !== 'undefined' && configVar) {
             var cleanedString = configVar;
-            cleanedString = cleanedString.replace(/^"([\s\S]*)"$/, "$1");
+            cleanedString = cleanedString.replace(/^"([.\n]*)"$/, "$1");
             return cleanedString;
         }
         return ""; 
