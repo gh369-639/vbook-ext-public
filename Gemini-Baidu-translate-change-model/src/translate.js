@@ -1,9 +1,9 @@
 load("language_list.js"); 
-var apiKeys = [];
+var apiKeys = ["AIzaSyBDUHswiHfWmhWfgw129gbFZ8FI8p49bm0"];
 try {
     if (typeof api_keys !== 'undefined' && api_keys) {
         var clean_api_keys = api_keys;
-        clean_api_keys = clean_api_keys.replace(/^"([.\n]*)"$/, "$1");
+        clean_api_keys = clean_api_keysreplace(/^"([\s\S]*)"$/, "$1");
         apiKeys = (clean_api_keys || "").split('\n') 
             .map(function(k) { return k.trim(); })
             .filter(function(k) { return k !== ""; });
@@ -14,7 +14,7 @@ var cacheableModels = [];
 try {
     if (typeof modelsavecache !== 'undefined' && modelsavecache) {
         var clean_modelsavecache = modelsavecache;
-        clean_modelsavecache = clean_modelsavecache.replace(/^"([.\n]*)"$/, "$1");
+        clean_modelsavecache = clean_modelsavecachereplace(/^"([\s\S]*)"$/, "$1");
         cacheableModels = (clean_modelsavecache || "").split('\n')
             .map(function(k) { return k.trim(); })
             .filter(function(k) { return k !== ""; });
@@ -26,12 +26,11 @@ try {
     function getCleanedConfigString(configVar) {
         if (typeof configVar !== 'undefined' && configVar) {
             var cleanedString = configVar;
-            cleanedString = cleanedString.replace(/^"([.\n]*)"$/, "$1");
+            cleanedString = cleanedStringreplace(/^"([\s\S]*)"$/, "$1");
             return cleanedString;
         }
         return ""; 
     }
-
     prompts['vi_tieuchuan'] = getCleanedConfigString(prompt_standard);
     prompts['vi_sac'] = getCleanedConfigString(prompt_erotic);
     prompts['vi_NameEng'] = getCleanedConfigString(prompt_name_eng);
