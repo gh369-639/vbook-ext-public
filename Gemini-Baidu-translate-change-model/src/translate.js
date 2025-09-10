@@ -3,9 +3,7 @@ var apiKeys = [];
 try {
     if (typeof api_keys !== 'undefined' && api_keys) {
         var clean_api_keys = api_keys;
-        if (clean_api_keys.startsWith('"') && clean_api_keys.endsWith('"')) {
-            clean_api_keys = clean_api_keys.substring(1, clean_api_keys.length - 1);
-        }
+        clean_api_keys = clean_api_keys.replace(/^"(.*)"$/s, "$1");
         apiKeys = (clean_api_keys || "").split('\n') 
             .map(function(k) { return k.trim(); })
             .filter(function(k) { return k !== ""; });
@@ -16,9 +14,7 @@ var cacheableModels = [];
 try {
     if (typeof modelsavecache !== 'undefined' && modelsavecache) {
         var clean_modelsavecache = modelsavecache;
-        if (clean_modelsavecache.startsWith('"') && clean_modelsavecache.endsWith('"')) {
-            clean_modelsavecache = clean_modelsavecache.substring(1, clean_modelsavecache.length - 1);
-        }
+        clean_modelsavecache = clean_modelsavecache.replace(/^"(.*)"$/s, "$1");
         cacheableModels = (clean_modelsavecache || "").split('\n')
             .map(function(k) { return k.trim(); })
             .filter(function(k) { return k !== ""; });
@@ -30,10 +26,7 @@ try {
     function getCleanedConfigString(configVar) {
         if (typeof configVar !== 'undefined' && configVar) {
             var cleanedString = configVar;
-            if (cleanedString.startsWith('"') && cleanedString.endsWith('"')) {
-                cleanedString = cleanedString.substring(1, cleanedString.length - 1);
-            }
-            cleanedString = cleanedString.replace(/'/g, '**').replace(/"/g, '**');
+            cleanedString = cleanedString.replace(/^"(.*)"$/s, "$1");
             return cleanedString;
         }
         return ""; 
