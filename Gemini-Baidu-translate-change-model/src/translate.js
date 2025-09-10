@@ -1,5 +1,5 @@
 load("language_list.js"); 
-var apiKeys = ["AIzaSyBDUHswiHfWmhWfgw129gbFZ8FI8p49bm0"];
+var apiKeys = [];
 try {
     if (typeof api_keys !== 'undefined' && api_keys) {
         var clean_api_keys = api_keys;
