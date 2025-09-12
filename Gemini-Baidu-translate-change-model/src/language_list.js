@@ -1,4 +1,6 @@
 let languages = [
+    {"id": "gemini-2.0-flash", "name": "Model: 2.0 Flash"},
+    {"id": "gemini-2.0-flash-lite", "name": "Model: 2.0 Flash lite"},
     {"id": "gemini-2.5-pro", "name": "Model: 2.5 Pro"},
     {"id": "gemini-2.5-flash-preview-05-20", "name": "Model: 2.5 Flash Preview"},
     {"id": "gemini-2.5-flash", "name": "Model: 2.5 Flash"},
