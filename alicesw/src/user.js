@@ -1,6 +1,7 @@
 load('config.js');
-function execute(url) {
-    let response = fetch(url);
+function execute(url,page) {
+    if (!page) page = 1;
+    let response = fetch(url + "?page=" + page);
     if (response.ok) {
         let doc = response.html();
         console.log(doc)
@@ -15,12 +16,12 @@ function execute(url) {
                 host: BASE_URL
             });
         });
-        return Response.success(data);
+        var nextPage = doc.select(".pagination li").last().attr("class");
+        if (nextPage === "disabled") {return Response.success(data)}
+        else {
+            nextPage = parseInt(page) + 1;
+            return Response.success(data, nextPage);
+        }
     }
-    return Response.success([{
-                name: "Đăng nhập AliceSW để xem tủ sách của bạn",
-                link: "/user/user/login.html",
-                description: "tạo tài khoản rồi đăng nhập",
-                host: BASE_URL
-            }]);
+    return Response.error("Đăng nhập để xem tủ sách");
 }
