@@ -17,6 +17,7 @@ function execute(url) {
                 script: "gen.js"
             })
         });
+        //console.log(doc.select("ul.ranking-list").html())
         let ongoing = true
         if (doc.select(".box_info a[href*='author']").text().equals("已完结")) {ongoing = false;}
 
@@ -29,7 +30,7 @@ function execute(url) {
             genres: genres,
             suggests: [{
                 title: "View more",
-                input: url,
+                input: doc.select("ul.ranking-list").html(),
                 script: "suggest.js"
             }]
         });
