@@ -2,7 +2,11 @@ load('config.js');
 function execute(url, page) {
     if (!page) page = '1';
     let fullUrl = url + "&sort=hits_DESC&p=" + page + "&serialize="; 
-    let response = fetch(fullUrl);
+    let response = fetch(fullUrl, {
+        headers: {
+            "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/140.0.0.0 Safari/537.36 Edg/140.0.0.0",
+        }
+    });
     if (response.ok) {
         let doc = response.html();
         var data = [];
