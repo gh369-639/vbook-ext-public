@@ -2,7 +2,7 @@
   "metadata": {
     "name": "Gemini Baidu Translate change Model",
     "author": "3690",
-    "version": 111,
+    "version": 112,
     "source": "https://aistudio.google.com/apikey",
     "description": "Dịch văn bản bằng Google Gemini API với nhiều key, prompt, tùy chỉnh theo thể loại và xử lý lỗi an toàn thông minh. DONATE CHO ADMIN VBOOK NHIỀU LÊN ĐỂ VỪA CÓ TÊN ĐẸP, ADMIN LẠI CÓ THÊM ĐỘNG LỰC HOÀN THIỆN APP",
     "type": "translate"
@@ -14,6 +14,7 @@
   "config": {
     "support_auto_detect": true,
     "max_length": 50000,
+    "max_line": 500,
     "support_url": "https://aistudio.google.com/apikey",
     "api_keys": {
       "title": "Gemini API Keys",
