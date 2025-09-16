@@ -31,8 +31,8 @@ try {
         }
         return ""; 
     }
-    prompts['vi_tieuchuan'] = getCleanedConfigString(prompt_standard);
-    prompts['vi_sac'] = getCleanedConfigString(prompt_erotic);
+    prompts['vi_tuychon1'] = getCleanedConfigString(prompt_tuychon1);
+    prompts['vi_tuychon2'] = getCleanedConfigString(prompt_tuychon2);
     prompts['vi_NameEng'] = getCleanedConfigString(prompt_name_eng);
     prompts['vi_vietlai'] = getCleanedConfigString(prompt_rewrite);
 
@@ -202,7 +202,7 @@ function execute(text, from, to) {
     var lineLengthThreshold = 25; 
     if (to === 'vi_vietlai') {
         lengthThreshold = 1500;
-        lineLengthThreshold = 60;
+        lineLengthThreshold = 80;
     }
     if (text.length < lengthThreshold) {
         isShortTextOrList = true;
@@ -269,7 +269,7 @@ function execute(text, from, to) {
         var finalTo = to; 
         var isPinyinRoute = false; 
         var validModels = ["gemini-2.5-pro", "gemini-2.5-flash-preview-05-20", "gemini-2.5-flash", "gemini-2.5-flash-lite", "gemini-2.0-flash-lite", "gemini-2.0-flash"];
-        var pinyinLangs = ['vi_tieuchuan', 'vi_sac', 'vi_NameEng', 'vi_layname'];
+        var pinyinLangs = ['vi_tieuchuan', 'vi_sac', 'vi_NameEng', 'vi_layname', 'vi_tuychon1', 'vi_tuychon2'];
 
         if (validModels.indexOf(from) > -1) {
             modelToUse = from;
