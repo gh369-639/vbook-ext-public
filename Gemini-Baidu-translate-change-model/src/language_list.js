@@ -12,6 +12,7 @@ let languages = [
     {"id": "vi_NameEng", "name": "Việt (Name English)"},
     {"id": "vi_sac", "name": "Truyện Sắc"},
     {"id": "vi_vietlai", "name": "Viết Lại Convert"},
-    {"id": "vi_layname", "name": "Lấy Name trong chương"},
+    {"id": "vi_tuychon1", "name": "Dùng prompt tùy chọn 1"},
+    {"id": "vi_tuychon2", "name": "Dùng prompt tùy chọn 2"},
     {"id": "vi_xoacache", "name": "Xóa Cache Chương Này"}
 ];
