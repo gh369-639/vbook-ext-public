@@ -23,6 +23,6 @@ try {
     if (localStorage.getItem('prompt_sac') === null) {
         localStorage.setItem('prompt_sac', default_prompt_sac);
     }
-    prompts['vi_sac'] = localStorage.getItem('vi_sac');
+    prompts['vi_sac'] = localStorage.getItem('prompt_sac');
 
 } catch(e) {}
