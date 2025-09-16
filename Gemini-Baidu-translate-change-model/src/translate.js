@@ -372,5 +372,5 @@ function execute(text, from, to) {
         }
     }
     
-    return Response.success(prompts[to] + finalContent);
+    return Response.success(finalContent);
 }
