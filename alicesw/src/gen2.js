@@ -13,7 +13,7 @@ function execute(url, page) {
         var data = [];
         doc.select(".clearfix.rec_rullist ul").forEach(e => {
             data.push({
-                name: e.select("li.two a").text(),
+                name: e.select("li.two a").text().replace(/文阅读/g, ""),
                 link: e.select("li.two a").attr("href"),
                 description: e.select("p").text(),
                 host: BASE_URL
