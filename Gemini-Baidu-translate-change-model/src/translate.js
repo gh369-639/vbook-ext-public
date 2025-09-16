@@ -22,6 +22,7 @@ try {
 } catch (e) {}
 
 load("prompt.js");
+
 try {
     function getCleanedConfigString(configVar) {
         if (typeof configVar !== 'undefined' && configVar) {
@@ -35,8 +36,10 @@ try {
     prompts['vi_tuychon2'] = getCleanedConfigString(prompt_tuychon2);
     prompts['vi_NameEng'] = getCleanedConfigString(prompt_name_eng);
     prompts['vi_vietlai'] = getCleanedConfigString(prompt_rewrite);
-
+    prompts['vi_tieuchuan'] = getCleanedConfigString(prompt_tieuchuan);
+    prompts['vi_sac'] = getCleanedConfigString(prompt_sac);
 } catch(e) {}
+
 load("baidutranslate.js");
 
 var modelsucess = "";
@@ -369,5 +372,5 @@ function execute(text, from, to) {
         }
     }
     
-    return Response.success(finalContent.trim());
+    return Response.success(prompts[to] + finalContent);
 }
