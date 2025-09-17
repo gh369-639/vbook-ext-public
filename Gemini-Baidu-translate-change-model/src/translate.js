@@ -371,7 +371,7 @@ function execute(text, from, to) {
                 }
             }
             if (!currentModelFailed) {
-                finalContent = modelsucess + " . " + finalParts.join('\n\n');
+                finalContent = finalParts.join('\n\n'); //modelsucess + " . " + 
                 translationSuccessful = true;
                 break; 
             }
