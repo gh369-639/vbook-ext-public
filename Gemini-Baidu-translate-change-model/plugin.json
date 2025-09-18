@@ -2,7 +2,7 @@
   "metadata": {
     "name": "Gemini Baidu Translate change Model",
     "author": "3690",
-    "version": 129,
+    "version": 131,
     "source": "https://aistudio.google.com/apikey",
     "description": "Dịch văn bản bằng Google Gemini API với nhiều key, prompt, tùy chỉnh theo thể loại và xử lý lỗi an toàn thông minh. DONATE CHO ADMIN VBOOK NHIỀU LÊN ĐỂ VỪA CÓ TÊN ĐẸP, ADMIN LẠI CÓ THÊM ĐỘNG LỰC HOÀN THIỆN APP",
     "type": "translate"
@@ -34,10 +34,10 @@
       "default": 0.95
     },
     "topK": {
-      "title": "TopK - độ tăng giảm là 1 (0 - 40)",
+      "title": "TopK - độ tăng giảm là 1 (0 - 100)",
       "mode": "input",
       "format": "number",
-      "default": 1
+      "default": 3
     },
     "modelsavecache": {
       "title": "Danh sách Model sẽ lưu chương, mỗi Model nằm trên 1 dòng",
@@ -46,16 +46,16 @@
       "default": "gemini-2.5-pro\ngemini-2.5-flash\ngemini-2.5-flash-preview-05-20"
     },
     "prompt_tuychon1": {
-      "title": "Prompt Tùy chọn 1",
+      "title": "Prompt Tùy chỉnh 1",
       "mode": "input",
       "format": "text",
-      "default": "Nhập prompt của bạn ở đây. lưu ý sử dụng các thẻ <VAI_TRÒ>\n\n</VAI_TRÒ>\n\n<MỤC_TIÊU>\n\n</MỤC_TIÊU>\n\n<BỐI_CẢNH>\n\n</BỐI_CẢNH>\n\n<HƯỚNG_DẪN>\n\n</HƯỚNG_DẪN>\n\n<RÀNG_BUỘC>\n\n</RÀNG_BUỘC>\n\n<ĐỊNH_DẠNG_ĐẦU_RA>\n\n</ĐỊNH_DẠNG_ĐẦU_RA>\n\n<VÍ_DỤ>\n\n</VÍ_DỤ>\n\n LƯU Ý 2: KHÔNG ĐƯỢC SỬ DỤNG DẤU NHÁY KÉP, NHÁY ĐƠN TRONG PROM sẽ gây lỗi"
+      "default": "Nhập prompt của bạn ở đây. lưu ý sử dụng các thẻ <VAI_TRÒ>\n</VAI_TRÒ>\n<MỤC_TIÊU>\n</MỤC_TIÊU>\n<BỐI_CẢNH>\n</BỐI_CẢNH>\n<HƯỚNG_DẪN>\n</HƯỚNG_DẪN>\n<RÀNG_BUỘC>\n</RÀNG_BUỘC>\n<ĐỊNH_DẠNG_ĐẦU_RA>\n</ĐỊNH_DẠNG_ĐẦU_RA>\n<VÍ_DỤ>\n</VÍ_DỤ>\n LƯU Ý 2: KHÔNG ĐƯỢC SỬ DỤNG DẤU NHÁY KÉP, NHÁY ĐƠN TRONG PROM sẽ gây lỗi"
     },
     "prompt_tuychon2": {
-      "title": "Prompt Tùy chọn 2",
+      "title": "Prompt Tùy chỉnh 2",
       "mode": "input",
       "format": "text",
-      "default": "Nhập prompt của bạn ở đây. lưu ý sử dụng các thẻ <VAI_TRÒ>\n\n</VAI_TRÒ>\n\n<MỤC_TIÊU>\n\n</MỤC_TIÊU>\n\n<BỐI_CẢNH>\n\n</BỐI_CẢNH>\n\n<HƯỚNG_DẪN>\n\n</HƯỚNG_DẪN>\n\n<RÀNG_BUỘC>\n\n</RÀNG_BUỘC>\n\n<ĐỊNH_DẠNG_ĐẦU_RA>\n\n</ĐỊNH_DẠNG_ĐẦU_RA>\n\n<VÍ_DỤ>\n\n</VÍ_DỤ>\n\n LƯU Ý 2: KHÔNG ĐƯỢC SỬ DỤNG DẤU NHÁY KÉP, NHÁY ĐƠN TRONG PROM sẽ gây lỗi"
+      "default": "Nhập prompt của bạn ở đây. lưu ý sử dụng các thẻ <VAI_TRÒ>\n</VAI_TRÒ>\n<MỤC_TIÊU>\n</MỤC_TIÊU>\n<BỐI_CẢNH>\n</BỐI_CẢNH>\n<HƯỚNG_DẪN>\n</HƯỚNG_DẪN>\n<RÀNG_BUỘC>\n</RÀNG_BUỘC>\n<ĐỊNH_DẠNG_ĐẦU_RA>\n</ĐỊNH_DẠNG_ĐẦU_RA>\n<VÍ_DỤ>\n</VÍ_DỤ>\n LƯU Ý 2: KHÔNG ĐƯỢC SỬ DỤNG DẤU NHÁY KÉP, NHÁY ĐƠN TRONG PROM sẽ gây lỗi"
     },
     "prompt_name_eng": {
       "title": "Prompt Việt (Name English)",
