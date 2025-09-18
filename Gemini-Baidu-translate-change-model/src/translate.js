@@ -48,7 +48,7 @@ var models = [
     "gemini-2.5-flash-lite"
 ];
 
-var pinyinOverlapThreshold = 0.4;
+var pinyinOverlapThreshold = 0.52;
 
 function generateFingerprintCacheKey(lines) {
     var keyParts = "";
