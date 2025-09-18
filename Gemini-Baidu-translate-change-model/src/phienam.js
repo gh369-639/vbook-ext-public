@@ -3,17 +3,7 @@ var hanVietMap = {"耀":"diệu","老":"lão","考":"khảo","耄":"mạo","者"
 function phienAmToHanViet(text) {
     if (!text) return "";
     var resultText = "";
-            text = text.replace(/大家伙儿/g, '**tất cả mọi người** ');
-            text = text.replace(/我们/g, '**chúng ta** ');
-            text = text.replace(/咱们/g, '**chúng ta** ');
-            text = text.replace(/你们/g, '**các ngươi** ');
-            text = text.replace(/她们/g, '**các nàng** ');
-            text = text.replace(/它们/g, '**bọn chúng** ');
-            text = text.replace(/他们/g, '**bọn họ** ');
-            text = text.replace(/自己/g, '**bản thân** ');
-            text = text.replace(/自个儿/g, '**chính mình** ');
-            text = text.replace(/别人/g, '**người khác** ');
-            text = text.replace(/他人/g, '**người khác** ');
+    text = text.replace(/大家伙儿/gi, '**tất cả mọi người** ').replace(/我们/gi, '**chúng ta** ').replace(/咱们/gi, '**chúng ta** ').replace(/你们/gi, '**các ngươi** ').replace(/她们/gi, '**các nàng** ').replace(/它们/gi, '**bọn chúng** ').replace(/他们/gi, '**bọn họ** ').replace(/自己/gi, '**bản thân** ').replace(/自个儿/gi, '**chính mình** ').replace(/别人/gi, '**người khác** ').replace(/他人/gi, '**người khác** ');
     for (var i = 0; i < text.length; i++) {
         var char = text[i];
         var hanViet = hanVietMap[char];
