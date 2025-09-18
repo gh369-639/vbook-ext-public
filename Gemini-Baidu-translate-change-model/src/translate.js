@@ -86,7 +86,7 @@ function callGeminiAPI(text, prompt, apiKey, model) {
     if (!text || text.trim() === '') { return { status: "success", data: "" }; }
     modelsucess = model;
     let maxop = 65536;
-    if (model.includes("gemini-2.0")) maxop = 8192
+    if (model === "gemini-2.0-flash-exp" || model === "gemini-2.0-flash-thinking-exp-01-21" || model === "gemini-2.0-flash-lite-001" || model === "gemini-2.0-flash-001" ) maxop = 8192
     var full_prompt = prompt + "\n\nDưới đây là văn bản cần xử lý\n\n" + text;
     var url = "https://generativelanguage.googleapis.com/v1beta/models/" + model + ":generateContent?key=" + apiKey;
     var body = {
@@ -370,9 +370,9 @@ function execute(text, from, to) {
             var MIN_LAST_CHUNK_SIZE = 500;
             if (currentModel === "gemini-2.5-pro") {
                 CHUNK_SIZE = 1500; MIN_LAST_CHUNK_SIZE = 100;
-            } else if (currentModel === "gemini-2.5-flash" || currentModel === "gemini-2.5-flash-preview-05-20" || currentModel === "gemini-2.0-flash-thinking-exp-01-21") {
+            } else if (currentModel === "gemini-2.5-flash" || currentModel === "gemini-2.5-flash-preview-05-20" || currentModel === "gemini-2.0-flash-thinking-exp-01-21" || currentModel === "gemini-2.0-flash-exp") {
                 CHUNK_SIZE = 2000; MIN_LAST_CHUNK_SIZE = 500;
-            } else if (currentModel === "gemini-2.0-flash-001" || currentModel === "gemini-2.0-flash-lite-001" || currentModel === "gemini-2.0-flash-exp") {
+            } else if (currentModel === "gemini-2.0-flash-001" || currentModel === "gemini-2.0-flash-lite-001") {
                 CHUNK_SIZE = 4000; MIN_LAST_CHUNK_SIZE = 500;
             }
 // || currentModel === "gemini-2.0-flash-lite" || currentModel === "gemini-2.0-flash"
