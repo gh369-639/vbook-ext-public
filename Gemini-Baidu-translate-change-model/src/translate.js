@@ -92,7 +92,11 @@ function callGeminiAPI(text, prompt, apiKey, model) {
                     return { status: "error", message: "Dịch bị cắt ngắn do đạt giới hạn token (MAX_TOKENS)." };
                 }
                 if (candidate.content && candidate.content.parts && candidate.content.parts.length > 0 && candidate.content.parts[0].text) {
-                    return { status: "success", data: candidate.content.parts[0].text.trim() };
+                    var textResult = candidate.content.parts[0].text.trim();
+                    if (/[\u4e00-\u9fff]/.test(textResult)) {
+                        return { status: "error", message: "Kết quả chứa Hán tự, không hợp lệ." };
+                    }
+                    return { status: "success", data: textResult };
                 }
             }
             if (result.promptFeedback && result.promptFeedback.blockReason) { return { status: "blocked", message: "Bị chặn bởi Safety Settings: " + result.promptFeedback.blockReason }; }
