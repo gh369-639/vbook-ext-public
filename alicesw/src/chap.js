@@ -1,9 +1,9 @@
 function execute(url) {    
     var browser = Engine.newBrowser();
-    browser.launch(url, 3000); 
+    browser.launch(url, 5000); 
 
     let htm = "";
-    const maxTries = 5; 
+    const maxTries = 9; 
     const delay = 500;  
 
     for (var i = 0; i < maxTries; i++) {
