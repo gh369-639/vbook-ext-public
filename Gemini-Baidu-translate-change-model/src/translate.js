@@ -375,6 +375,7 @@ function execute(text, from, to) {
             }
             if (!currentModelFailed) {
                 finalContent = finalParts.join('\n\n'); //modelsucess + " . " + 
+                finalContent = finalContent.replace(/\*/g, '').trim();
                 translationSuccessful = true;
                 break; 
             }
