@@ -86,7 +86,7 @@ function callGeminiAPI(text, prompt, apiKey, model) {
     if (!text || text.trim() === '') { return { status: "success", data: "" }; }
     modelsucess = model;
     let maxop = 65536;
-    if (model === "gemini-2.0-flash-lite" || model === "gemini-2.0-flash") maxop = 8192
+    if (model.includes("gemini-2.0")) maxop = 8192
     var full_prompt = prompt + "\n\nDưới đây là văn bản cần xử lý\n\n" + text;
     var url = "https://generativelanguage.googleapis.com/v1beta/models/" + model + ":generateContent?key=" + apiKey;
     var body = {
@@ -343,7 +343,7 @@ function execute(text, from, to) {
         var useModelLoop = true;
         var finalTo = to; 
         var isPinyinRoute = false; 
-        var validModels = ["gemini-2.5-pro", "gemini-2.5-flash-preview-05-20", "gemini-2.5-flash", "gemini-2.5-flash-lite", "gemini-2.0-flash-lite", "gemini-2.0-flash"];
+        var validModels = ["gemini-2.5-pro", "gemini-2.5-flash-preview-05-20", "gemini-2.5-flash", "gemini-2.5-flash-lite", "gemini-2.0-flash-lite-001", "gemini-2.0-flash-001", "gemini-2.0-flash-exp", "gemini-2.0-flash-thinking-exp-01-21"];
         var pinyinLangs = ['vi_tieuchuan', 'vi_sac', 'vi_NameEng', 'vi_layname', 'vi_tuychon1', 'vi_tuychon2'];
 
         if (validModels.indexOf(from) > -1) {
@@ -366,13 +366,13 @@ function execute(text, from, to) {
 
         for (var m = 0; m < modelsToIterate.length; m++) {
             var currentModel = modelsToIterate[m];
-            var CHUNK_SIZE = 10000;
+            var CHUNK_SIZE = 8000;
             var MIN_LAST_CHUNK_SIZE = 500;
             if (currentModel === "gemini-2.5-pro") {
                 CHUNK_SIZE = 1500; MIN_LAST_CHUNK_SIZE = 100;
-            } else if (currentModel === "gemini-2.5-flash" || currentModel === "gemini-2.5-flash-preview-05-20") {
+            } else if (currentModel === "gemini-2.5-flash" || currentModel === "gemini-2.5-flash-preview-05-20" || currentModel === "gemini-2.0-flash-thinking-exp-01-21") {
                 CHUNK_SIZE = 2000; MIN_LAST_CHUNK_SIZE = 500;
-            } else if (currentModel === "gemini-2.0-flash" || currentModel === "gemini-2.0-flash-lite") {
+            } else if (currentModel === "gemini-2.0-flash-001" || currentModel === "gemini-2.0-flash-lite-001" || currentModel === "gemini-2.0-flash-exp") {
                 CHUNK_SIZE = 4000; MIN_LAST_CHUNK_SIZE = 500;
             }
 // || currentModel === "gemini-2.0-flash-lite" || currentModel === "gemini-2.0-flash"
