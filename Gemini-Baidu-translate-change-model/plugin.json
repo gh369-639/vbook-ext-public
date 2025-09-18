@@ -2,7 +2,7 @@
   "metadata": {
     "name": "Gemini Baidu Translate change Model",
     "author": "3690",
-    "version": 140,
+    "version": 141,
     "source": "https://aistudio.google.com/apikey",
     "description": "Dịch văn bản bằng Google Gemini API với nhiều key, prompt, tùy chỉnh theo thể loại và xử lý lỗi an toàn thông minh. DONATE CHO ADMIN VBOOK NHIỀU LÊN ĐỂ VỪA CÓ TÊN ĐẸP, ADMIN LẠI CÓ THÊM ĐỘNG LỰC HOÀN THIỆN APP",
     "type": "translate"
@@ -43,7 +43,7 @@
       "title": "Danh sách Model sẽ lưu chương, mỗi Model nằm trên 1 dòng",
       "mode": "input",
       "format": "text",
-      "default": "gemini-2.5-pro\ngemini-2.5-flash\ngemini-2.5-flash-preview-05-20\ngemini-2.0-flash-thinking"
+      "default": "gemini-2.5-pro\ngemini-2.5-flash\ngemini-2.5-flash-preview-05-20\ngemini-2.0-flash-thinking-exp-01-21"
     },
     "prompt_tuychon1": {
       "title": "Prompt Tùy chỉnh 1",

@@ -2,7 +2,7 @@ let languages = [
     {"id": "gemini-2.0-flash-001", "name": "Model: 2.0 Flash gemini-2.0-flash-001"},
     {"id": "gemini-2.0-flash-lite-001", "name": "Model: 2.0 Flash-lite gemini-2.0-flash-lite-001"},
     {"id": "gemini-2.0-flash-exp", "name": "Model: 2.0 Flash Exp gemini-2.0-flash-exp"},
-    {"id": "gemini-2.0-flash-thinking-exp-01-21", "name": "2.0 thinking gemini-2.0-flash-thinking"},
+    {"id": "gemini-2.0-flash-thinking-exp-01-21", "name": "2.0 thinking gemini-2.0-flash-thinking-exp-01-21"},
     {"id": "gemini-2.5-pro", "name": "Model: 2.5 Pro gemini-2.5-pro"},
     {"id": "gemini-2.5-flash-preview-05-20", "name": "Model: 2.5 Flash Preview gemini-2.5-flash-preview-05-20"},
     {"id": "gemini-2.5-flash", "name": "Model: 2.5 Flash gemini-2.5-flash"},
