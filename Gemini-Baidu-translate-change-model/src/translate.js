@@ -48,7 +48,7 @@ var models = [
     "gemini-2.5-flash-lite"
 ];
 
-var pinyinOverlapThreshold = 0.55;
+var pinyinOverlapThreshold = 0.6;
 
 function generateFingerprintCacheKey(lines) {
     var keyParts = "";
@@ -69,7 +69,7 @@ function getUniqueWords(text) {
     
     var lowerCaseText = text.toLowerCase();
     
-    var words = lowerCaseText.split(/[\s,.;:!?()\[\]{}'"，？”“。, ：！*#…‘’《》【】]+/);
+    var words = lowerCaseText.split(/[\s,.;:!?()\[\]{}'"，？”“。, ：！*#…‘’《》【】~1234567890]+/);
     
     var uniqueWords = {};
     for (var i = 0; i < words.length; i++) {
@@ -430,6 +430,10 @@ function execute(text, from, to) {
                         chunkToSend = phienAmToHanViet(chunkToSend);
                     } catch (e) { return Response.error("LỖI: Không thể tải file phienam.js."); }
                 }
+                if (finalTo === "vi_sac") pinyinOverlapThreshold = 0.35;
+                if (finalTo === "vi_NameEng") pinyinOverlapThreshold = 0.5;
+                if (finalTo === "vi_vietlai") pinyinOverlapThreshold = 0.1;
+                if (finalTo === "vi_tuychon1" || finalTo === "vi_tuychon2") pinyinOverlapThreshold = 0.7;
                 var chunkResult = translateChunkWithApiRetry(chunkToSend, selectedPrompt, currentModel, rotatedApiKeys, isPinyinRoute);
                 if (chunkResult.status === 'success') {
                     finalParts.push(chunkResult.data);
