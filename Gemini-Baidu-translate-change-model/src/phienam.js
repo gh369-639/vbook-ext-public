@@ -4,6 +4,15 @@ var defaultChineseSurnames = [
     "万俟=Mặc Sĩ","上官=Thượng Quan","丌官=Kỳ Quan","东方=Đông Phương","东郭=Đông Quách","东门=Đông Môn","东阁=Đông Các","乐正=Nhạc Chính","亓官=亓 Quan","令狐=Lệnh Hồ","仲孙=Trọng Tôn","公冶=Công Dã","公孙=Công Tôn","公羊=Công Dương","公良=Công Lương","公西=Công Tây","单于=Thiền Vu","南宫=Nam Cung","南門=Nam Môn","南门=Nam Môn","司寇=Tư Khấu","司徒=Tư Đồ","司空=Tư Không","司馬=Tư Mã","司马=Tư Mã","呼延=Hô Diên","壤駟=Nhưỡng Tứ","壤驷=Nhưỡng Tứ","夏侯=Hạ Hầu","太叔=Thái Thúc","太史=Thái Sử","夹谷=Giáp Cốc","子車=Tử Xa","子车=Tử Xa","宇文=Vũ Văn","安国=An Quốc","安平=An Bình","完颜=Hoàn Nhan","宗政=Tông Chính","宰父=Tể Phụ","尉迟=Uất Trì","嵬名=嵬 Danh","左丘=Tả Khâu","左人=Tả Nhân","巫馬=Vu Mã","巫马=Vu Mã","归海=Quy Hải","微生=Vi Sinh","慕容=Mộ Dung","成公=Thành Công","拓拔=Thác Bạt","拓跋=Thác Bạt","杨子=Dương Tử","梁丘=Lương Khâu","欧阳=Âu Dương","段干=Đoạn Càn","段幹=Đoạn Càn","毌丘=毌 Khâu","沙吒=Sa Tra","淳于=Thuần Vu","漆雕=Tất Điêu","澹台=Đạm Đài","濮阳=濮 Dương","独孤=Độc Cô","甪里=甪 Lí","申屠=Thân Đồ","百裏=Bách Lý","百里=Bách Lý","皇甫=Hoàng Phủ","祝融=Chúc Dung","穀粱=Cốc Lương","章仇=Chương Cừu","端木=Đoan Mộc","纳兰=Nạp Lan","羊舌=Dương Thiệt","耶律=Gia Luật","聞人=Văn Nhân","萬俟=Mặc Sĩ","西門=Tây Môn","西门=Tây Môn","諸葛=Gia Cát","诸葛=Gia Cát","谷粱=Cốc Lương","贺拔=Hạ Bạt","贺若=Hạ Nhược","赫连=Hách Liên","軒轅=Hiên Viên","钟离=Chung Ly","長孫=Trưởng Tôn","闾丘=Lư Khâu","闻人=Văn Nhân","顓孙=Chuyên Tôn","颛孙=Chuyên Tôn","鮮于=Tiên Vu","鲜于=Tiên Vu","毕=Tất","邓=Đặng","杨=Dương","洛=Lạc","洪=Hồng","温=Ôn","潘=Phan","卢=Lư","焉=Yên","熊=Hùng","猫=Miêu","王=Vương","田=Điền","向=Hướng","沉=Trầm","白=Bạch","凌=Lăng","秋=Thu","秦=Tần","程=Trình","纪=Kỷ","罗=La","翟=Địch","聂=Nhiếp","肖=Tiêu","胡=Hồ","涂=Đồ","舒=Thư","花=Hoa","苏=Tô","石=Thạch","萧=Tiêu","行=Hành","裴=Bùi","贺=Hạ","赵=Triệu","达=Đạt","郭=Quách","于=Vu","钱=Tiền","陆=Lục","陈=Trần","廖=Liêu","陶=Đào","雷=Lôi","霍=Hoắc","韩=Hàn","项=Hạng","顾=Cố","马=Mã","高=Cao","魏=Ngụy","黄=Hoàng","龙=Long","吴=Ngô","周=Chu","唐=Đường","图=Đồ","圆=Viên","夏=Hạ","笙=Sanh","天=Thiên","姚=Diêu","姬=Cơ","孔=Khổng","孙=Tôn","孟=Mạnh","宁=Ninh","安=An","宋=Tống","尧=Nghiêu","詹=Chiêm","展=Triển","崔=Thôi","常=Thường","平=Bình","张=Trương","徐=Từ","成=Thành","戴=Đái","文=Văn","方=Phương","晁=Triều","朱=Chu","李=Lý","林=Lâm","柯=Kha","柳=Liễu","辛=Tân","梁=Lương","梅=Mai","楚=Sở","段=Đoạn","祁=Kỳ","毛=Mao","左=Tả","丁=Đinh","何=Hà","余=Dư","佟=Đồng","侯=Hầu","俞=Du","候=Hầu","冯=Phùng","冷=Lãnh","刀=Đao","刘=Lưu","华=Hoa","卫=Vệ","叶=Diệp","汉=Hán","闫=Diêm","严=Nghiêm","云=Vân","任=Nhậm","伟=Vĩ","凤=Phượng","刁=Điêu","包=Bao","危=Nguy","史=Sử","吕=Lữ","红=Hồng","喻=Dụ","奚=Hề","姜=Khương","娄=Lâu","季=Quý","尤=Vưu","岑=Sầm","席=Tịch","廉=Liêm","强=Cường","彭=Bành","戚=Thích","施=Thi","昌=Xương","曹=Tào","柏=Bách","殷=Ân","水=Thủy","江=Giang","汤=Thang","蔡=Thái","沈=Thẩm","盛=Thịnh","逢=Phùng","窦=Đậu","章=Chương","祝=Chúc","童=Đồng","腾=Đằng","丧=Tang","苗=Miêu","范=Phạm","谭=Đàm","莫=Mạc","占=Chiêm","葛=Cát","蒋=Tưởng","黎=Lê","蓝=Lam","薛=Tiết","袁=Viên","褚=Chử","许=Hứa","时=Thời","池=Trì","谢=Tạ","费=Phí","贾=Giả","路=Lộ","邬=Ổ","邱=Khâu","邹=Trâu","郑=Trịnh","郝=Hách","酆=Phong","金=Kim","钟=Chung","闽=Mân","韦=Vi","颜=Nhan","骆=Lạc","鲁=Lỗ","鲍=Bào","麻=Ma","杜=Đỗ","谷=Cốc","将=Tương","董=Đổng","曲=Khúc","关=Quan","沐=Mộc","符=Phù","齐=Tề","丘=Khâu","汪=Uông","傅=Phó","曾=Tằng","滕=Đằng","全=Toàn"
 ];
 
+var defaultSuffixes = [
+    "人=nhân", "关=quan", "剑=kiếm", "县=huyện", "司=tư", "园=viên", "城=thành", "先城=tiên thành", "堂=đường", "宗=tông", "宫=cung", "神宫=thần cung",
+    "家=gia", "寺=tự", "居=cư", "屿=dữ", "岛=đảo", "先岛=tiên đảo", "崖=nhai", "州=châu", "市=thị", "帮=bang", "庄=trang", "店=điếm",
+    "府=phủ", "先府=tiên phủ", "庵=am", "拳=quyền", "掌=chưởng", "教=giáo", "星=tinh", "村=thôn", "楼=lâu", "殿=điện", "池=trì", "河=hà",
+    "法=pháp", "洞=động", "派=phái", "皇=hoàng", "知=tri", "经=kinh", "老=lão", "者=giả", "脚=cước", "蛊=cổ", "观=quan", "诀=quyết",
+    "谷=cốc", "镇=trấn", "门=môn", "阁=các", "阵=trận", "街=phố", "院=viện", "馆=quán", "山=sơn", "企业=xí nghiệp", "公司=công ty",
+    "集团=tập đoàn", "酒店=khách sạn"
+];
+
 var stopWordsRegex = /[的了著那嗎吧呢啊啥啥的之人我是你他她它]/g;
 var punctuationRegex = /[，。？！；：“”‘’（）《》【】、——…—\s\n\t\r]/g;
 
@@ -24,51 +33,10 @@ function simplePhienAm(text) {
     return result.trim();
 }
 
-function locVaThayTheName(textHan, minLen, maxLen, minCount) {
-    var cleanedText = textHan.replace(stopWordsRegex, '').replace(punctuationRegex, '');
-
-    var chineseSurnames = [];
-    var surnameMap = {}; 
-    try {
-        var storedSurnamesRaw = localStorage.getItem('vb_list_ho');
-        if (!storedSurnamesRaw) {
-            storedSurnamesRaw = defaultChineseSurnames.join('\n');
-            localStorage.setItem('vb_list_ho', storedSurnamesRaw);
-        }
-        
-        var allSurnames = (storedSurnamesRaw + '\n' + defaultChineseSurnames.join('\n')).split('\n');
-        
-        for (var i = 0; i < allSurnames.length; i++) {
-            if (allSurnames[i]) {
-                var parts = allSurnames[i].split('=');
-                if (parts.length === 2) {
-                    var hanTu = parts[0].trim();
-                    var phienAm = parts[1].trim();
-                    if (hanTu && !surnameMap[hanTu]) { 
-                        surnameMap[hanTu] = phienAm;
-                    }
-                }
-            }
-        }
-        chineseSurnames = Object.keys(surnameMap);
-    } catch (e) {
-        chineseSurnames = defaultChineseSurnames.map(function(item) {
-            return item.split('=')[0];
-        });
-    }
-
-    var surnamesInText = [];
-    for (var i = 0; i < chineseSurnames.length; i++) {
-        var surname = chineseSurnames[i];
-        if (cleanedText.indexOf(surname) !== -1) {
-            surnamesInText.push(surname);
-        }
-    }
-    surnamesInText.sort(function(a, b) { return b.length - a.length; });
-
+function locNameTheoHo(cleanedText, surnames, minLen, maxLen, minCount) {
     var potentialNames = {};
-    for (var j = 0; j < surnamesInText.length; j++) {
-        var surname = surnamesInText[j];
+    for (var j = 0; j < surnames.length; j++) {
+        var surname = surnames[j];
         for (var len = minLen; len <= maxLen; len++) {
             if (len < surname.length) continue;
             var regex = new RegExp(surname + '.{' + (len - surname.length) + '}', 'g');
@@ -82,12 +50,12 @@ function locVaThayTheName(textHan, minLen, maxLen, minCount) {
             }
         }
     }
-
+    
     var finalNameMap = {};
     for (var name in potentialNames) {
         if (potentialNames[name] >= minCount) {
-            for (var l = 0; l < surnamesInText.length; l++) {
-                var surname = surnamesInText[l];
+            for (var l = 0; l < surnames.length; l++) {
+                var surname = surnames[l];
                 if (name.startsWith(surname)) {
                     if (!finalNameMap[surname] || name.length > finalNameMap[surname].length) {
                         finalNameMap[surname] = name;
@@ -97,8 +65,96 @@ function locVaThayTheName(textHan, minLen, maxLen, minCount) {
             }
         }
     }
-    var finalNames = Object.values(finalNameMap);
+    return Object.values(finalNameMap);
+}
 
+function locNameTheoHauTo(cleanedText, suffixes, minLen, maxLen, minCount) {
+    var potentialNames = {};
+    for (var j = 0; j < suffixes.length; j++) {
+        var suffix = suffixes[j];
+        for (var len = minLen; len <= maxLen; len++) {
+            if (len < suffix.length) continue;
+            var regex = new RegExp('.{' + (len - suffix.length) + '}' + suffix, 'g');
+            var matches = cleanedText.match(regex);
+            
+            if (matches) {
+                for (var k = 0; k < matches.length; k++) {
+                    var name = matches[k];
+                    potentialNames[name] = (potentialNames[name] || 0) + 1;
+                }
+            }
+        }
+    }
+
+    var finalNames = [];
+    for (var name in potentialNames) {
+        if (potentialNames[name] >= minCount + 3) {
+            finalNames.push(name);
+        }
+    }
+    return finalNames;
+}
+
+function locVaThayTheName(textHan, minLen, maxLen, minCount, baseCount) {
+    var cleanedText = textHan.replace(stopWordsRegex, '').replace(punctuationRegex, '');
+
+    var chineseSurnames = [];
+    try {
+        var storedSurnamesRaw = localStorage.getItem('vb_list_ho');
+        if (!storedSurnamesRaw) {
+            storedSurnamesRaw = defaultChineseSurnames.join('\n');
+            localStorage.setItem('vb_list_ho', storedSurnamesRaw);
+        }
+        var allSurnames = (storedSurnamesRaw + '\n' + defaultChineseSurnames.join('\n')).split('\n');
+        var surnameMap = {}; 
+        for (var i = 0; i < allSurnames.length; i++) {
+            if (allSurnames[i]) {
+                var parts = allSurnames[i].split('=');
+                if (parts.length === 2 && parts[0].trim() && !surnameMap[parts[0].trim()]) {
+                    surnameMap[parts[0].trim()] = parts[1].trim();
+                }
+            }
+        }
+        chineseSurnames = Object.keys(surnameMap);
+    } catch (e) {
+        chineseSurnames = defaultChineseSurnames.map(function(item){ return item.split('=')[0]; });
+    }
+    
+    var suffixes = [];
+    try {
+        var storedSuffixesRaw = localStorage.getItem('vb_list_hauto');
+        if (!storedSuffixesRaw) {
+            storedSuffixesRaw = defaultSuffixes.join('\n');
+            localStorage.setItem('vb_list_hauto', storedSuffixesRaw);
+        }
+        var allSuffixes = (storedSuffixesRaw + '\n' + defaultSuffixes.join('\n')).split('\n');
+        var suffixMap = {};
+        for (var i = 0; i < allSuffixes.length; i++) {
+            if (allSuffixes[i]) {
+                var parts = allSuffixes[i].split('=');
+                if (parts.length === 2 && parts[0].trim() && !suffixMap[parts[0].trim()]) {
+                    suffixMap[parts[0].trim()] = parts[1].trim();
+                }
+            }
+        }
+        suffixes = Object.keys(suffixMap);
+    } catch (e) {
+        suffixes = defaultSuffixes.map(function(item){ return item.split('=')[0]; });
+    }
+
+    var namesFromHo = locNameTheoHo(cleanedText, chineseSurnames, minLen, maxLen, minCount);
+    var namesFromHauTo = locNameTheoHauTo(cleanedText, suffixes, minLen, maxLen, baseCount);
+    var allFoundNames = namesFromHo.concat(namesFromHauTo);
+    
+    var finalNames = [];
+    var seen = {};
+    for (var i = 0; i < allFoundNames.length; i++) {
+        if (!seen[allFoundNames[i]]) {
+            seen[allFoundNames[i]] = true;
+            finalNames.push(allFoundNames[i]);
+        }
+    }
+    
     var namesToStore = {};
     for (var m = 0; m < finalNames.length; m++) {
         var hanName = finalNames[m];
@@ -155,10 +211,21 @@ function phienAmToHanViet(text, minNameLength, maxNameLength, minRepeatCount) {
     if (isNaN(finalMinLen) || finalMinLen < 2) finalMinLen = 2;
     var finalMaxLen = parseInt(maxNameLength);
     if (isNaN(finalMaxLen) || finalMaxLen < finalMinLen) finalMaxLen = 4;
-    var finalMinCount = parseInt(minRepeatCount);
-    if (isNaN(finalMinCount) || finalMinCount < 1) finalMinCount = 5;
+    var baseMinCount = parseInt(minRepeatCount);
+    if (isNaN(baseMinCount) || baseMinCount < 1) baseMinCount = 3; 
 
-    var textWithNames = locVaThayTheName(text, finalMinLen, finalMaxLen, finalMinCount);
+    var textLength = text.length; console.log("Text length: " + textLength);
+    var lengthStandard = 1000; 
+    var incrementStep = 500;  
+    
+    var dynamicAdjustment = 0;
+    if (textLength > lengthStandard) {
+        dynamicAdjustment = Math.floor((textLength - lengthStandard) / incrementStep);
+    }
+    
+    var finalMinCount = baseMinCount + dynamicAdjustment; 
+
+    var textWithNames = locVaThayTheName(text, finalMinLen, finalMaxLen, finalMinCount, baseMinCount);
     
     var processedText = textWithNames.replace(/大家伙儿/gi, '**tất cả mọi người** ').replace(/我们/gi, '**chúng ta** ').replace(/咱们/gi, '**chúng ta** ').replace(/你们/gi, '**các ngươi** ').replace(/她们/gi, '**các nàng** ').replace(/它们/gi, '**bọn chúng** ').replace(/他们/gi, '**bọn họ** ').replace(/自己/gi, '**bản thân** ').replace(/自个儿/gi, '**chính mình** ').replace(/别人/gi, '**người khác** ').replace(/他人/gi, '**người khác** ');
 
@@ -173,6 +240,6 @@ function phienAmToHanViet(text, minNameLength, maxNameLength, minRepeatCount) {
             resultText += char;
         }
     }
-//    console.log(resultText.trim());
+    console.log(resultText);
     return resultText.trim();
 }

@@ -2,7 +2,7 @@
   "metadata": {
     "name": "Gemini Baidu Translate change Model",
     "author": "3690",
-    "version": 148,
+    "version": 149,
     "source": "https://aistudio.google.com/apikey",
     "description": "Dịch văn bản bằng Google Gemini API với nhiều key, prompt, tùy chỉnh theo thể loại và xử lý lỗi an toàn thông minh. DONATE CHO ADMIN VBOOK NHIỀU LÊN ĐỂ VỪA CÓ TÊN ĐẸP, ADMIN LẠI CÓ THÊM ĐỘNG LỰC HOÀN THIỆN APP",
     "type": "translate"
@@ -25,7 +25,7 @@
       "title": "Temperature - độ tăng giảm là 0.05 (0 - 2.0)",
       "mode": "input",
       "format": "number",
-      "default": 1
+      "default": 0.85
     },
     "topP": {
       "title": "TopP - độ tăng giảm là 0.05 (0 - 1.0)",
