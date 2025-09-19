@@ -214,7 +214,7 @@ function phienAmToHanViet(text, minNameLength, maxNameLength, minRepeatCount) {
     var baseMinCount = parseInt(minRepeatCount);
     if (isNaN(baseMinCount) || baseMinCount < 1) baseMinCount = 3; 
 
-    var textLength = text.length; console.log("Text length: " + textLength);
+    var textLength = text.length; //console.log("Text length: " + textLength);
     var lengthStandard = 1000; 
     var incrementStep = 500;  
     
@@ -240,6 +240,6 @@ function phienAmToHanViet(text, minNameLength, maxNameLength, minRepeatCount) {
             resultText += char;
         }
     }
-    console.log(resultText);
+    //console.log(resultText);
     return resultText.trim();
 }
