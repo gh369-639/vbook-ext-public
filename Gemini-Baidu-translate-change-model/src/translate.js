@@ -127,7 +127,7 @@ function callGeminiAPI(text, prompt, apiKey, model) {
     } catch (e) { return { status: "error", message: "Ngoại lệ Javascript: " + e.toString() }; }
 }
 
-function translateChunkWithApiRetry(chunkText, prompt, modelToUse, keysToTry, isPinyinRoute) { // Thêm isPinyinRoute
+function translateChunkWithApiRetry(chunkText, prompt, modelToUse, keysToTry, isPinyinRoute) { 
     var keyErrors = [];
     for (var i = 0; i < keysToTry.length; i++) {
         var apiKeyToUse = keysToTry[i];
@@ -427,13 +427,13 @@ function execute(text, from, to) {
                 if (isPinyinRoute && !isShortTextOrList) {
                     try {
                         load("phienam.js");
-                        chunkToSend = phienAmToHanViet(chunkToSend);
+                        chunkToSend = phienAmToHanViet(chunkToSend, minname, maxname, repeatname);
                     } catch (e) { return Response.error("LỖI: Không thể tải file phienam.js."); }
                 }
-                if (finalTo === "vi_sac") pinyinOverlapThreshold = 0.35;
+                if (finalTo === "vi_sac") pinyinOverlapThreshold = 0.5;
                 if (finalTo === "vi_NameEng") pinyinOverlapThreshold = 0.5;
-                if (finalTo === "vi_vietlai") pinyinOverlapThreshold = 0.1;
-                if (finalTo === "vi_tuychon1" || finalTo === "vi_tuychon2") pinyinOverlapThreshold = 0.7;
+                if (finalTo === "vi_vietlai") pinyinOverlapThreshold = 0.9;
+                if (finalTo === "vi_tuychon1" || finalTo === "vi_tuychon2") pinyinOverlapThreshold = 0.8;
                 var chunkResult = translateChunkWithApiRetry(chunkToSend, selectedPrompt, currentModel, rotatedApiKeys, isPinyinRoute);
                 if (chunkResult.status === 'success') {
                     finalParts.push(chunkResult.data);
