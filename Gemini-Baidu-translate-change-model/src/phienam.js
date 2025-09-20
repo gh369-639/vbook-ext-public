@@ -141,6 +141,7 @@ function locVaThayTheName(textHan, minLen, maxLen, minCount, baseCount) {
     } catch (e) {
         suffixes = defaultSuffixes.map(function(item){ return item.split('=')[0]; });
     }
+    suffixes.sort(function(a, b) { return b.length - a.length; });
 
     var namesFromHo = locNameTheoHo(cleanedText, chineseSurnames, minLen, maxLen, minCount);
     var namesFromHauTo = locNameTheoHauTo(cleanedText, suffixes, minLen, maxLen, baseCount);
