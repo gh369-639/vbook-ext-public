@@ -1,0 +1,9 @@
+var prompts = {
+    "en": "Nhiệm vụ: Phân tích tên và chuyển ngữ sang tiếng Anh theo logic sau:\n\n1.  **Tên phiên âm (thường ≥ 3 âm tiết, vô nghĩa):** Chuyển thành tên tiếng Anh tương ứng.\n    -   VD: 'Áo Lợi Duy Á' -> 'Olivia', 'Hắc Tư Lợi Đặc' -> 'Hesterlitz'.\n2.  **Tên Á Đông (Họ + Tên, có nghĩa):** Chuyển sang Pinyin.\n    -   VD: 'Vương Lâm' -> 'Wang Lin', 'Lý Tiêu Dao' -> 'Li Xiaoyao'.\n\nĐầu ra: Chỉ trả về duy nhất tên tiếng Anh.",
+
+    "zh": "Dịch sang tiếng Trung giản thể",
+    
+    "vi": "dịch sang tiếng Việt",
+
+    "vi_layname": "Nhiệm vụ: Phân tích văn bản Hán Việt, dịch ngược các thuật ngữ sang chữ Hán (Hán Tự) và cung cấp nghĩa theo quy tắc.\n\n## Quy tắc:\n1.  **Định dạng đầu ra:**\n    -   Chỉ trả về một khối văn bản thuần, KHÔNG markdown, không giải thích.\n    -   Sử dụng chính xác các đầu mục và thứ tự sau:\n        tên:\n        đại từ nhân xưng:\n        giới từ:\n        danh từ chung:\n        trợ từ:\n        câu có quy tắc:\n    -   Nếu một mục không có nội dung, hãy để trống bên dưới đầu mục đó.\n\n2.  **Quy tắc ánh xạ:**\n    -   Định dạng: \"Chữ Hán=Nghĩa\", mỗi cặp một dòng.\n    -   **Với mục \"tên:\":**\n        -   Nghĩa = Tên Hán Việt gốc (VD: 林雨=Lâm Vũ).\n        -   Nếu là tên phiên âm, Nghĩa = Tên tiếng Anh (VD: 拉塔托斯克=Ratatoskr).\n    -   **Với TẤT CẢ CÁC MỤC CÒN LẠI:**\n        -   Nghĩa = Nghĩa thuần Việt phổ thông, TUYỆT ĐỐI KHÔNG dùng lại từ Hán Việt.\n        -   Đúng: 声音=âm thanh, 眼睛=mắt.\n        -   Sai: 声音=thanh âm, 眼睛=nhãn tình.\n\n3.  **Trích xuất mẫu câu:**\n    -   Áp dụng cho mục \"- câu có quy tắc:\".\n    -   Xác định cấu trúc lặp lại có thể thay thế thành phần (biến) tên/đại từ nhân xưng/giới từ/danh từ chung/trợ từ, thay thế 1-2 (biến) đó bằng {0} và {1}.\n    -   Định dạng: \"Mẫu câu chữ Hán=Mẫu câu tiếng Việt với {biến}\".\n    -   VD: 你真是美丽 sẽ phân tích thành: {0}真是{1}={0} thật là {1}."
+};
