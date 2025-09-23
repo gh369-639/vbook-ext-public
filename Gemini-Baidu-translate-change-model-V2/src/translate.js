@@ -32,7 +32,7 @@ var models = [
     "gemini-2.5-flash-lite"
 ];
 
-var pinyinOverlapThreshold = 0.9;
+var pinyinOverlapThreshold = 0.95;
 
 function generateFingerprintCacheKey(lines) {
     var keyParts = "";
@@ -53,7 +53,7 @@ function getUniqueWords(text) {
     
     var lowerCaseText = text.toLowerCase();
     
-    var words = lowerCaseText.split(/[\s,.;:!?()\[\]{}'"，？”“。, ：！*#…‘’《》【】~1234567890]+/);
+    var words = lowerCaseText.split(/[^a-zA-ZÀ-ỹ]+/);
     
     var uniqueWords = {};
     for (var i = 0; i < words.length; i++) {

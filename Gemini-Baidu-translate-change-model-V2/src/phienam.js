@@ -14,7 +14,7 @@ let defaultSuffixes = [
 ];
 
 let stopWordsRegex = /[的了著那嗎吧呢啊啥啥的之人我是你他她它]/g;
-let punctuationRegex = /[，。？！；：“”‘’（）《》【】、——…—\s\n\t\r]/g;
+//let punctuationRegex = /[，。？！；：“”‘’（）《》【】、——…—\s\n\t\r]/g;
 
 function capitalizeName(name) {
     return name.split(' ').map(function(word) {
@@ -96,7 +96,7 @@ function locNameTheoHauTo(cleanedText, suffixes, minLen, maxLen, minCount) {
 }
 
 function locVaThayTheName(textHan, minLen, maxLen, minCount, baseCount, selprompt) {
-    let cleanedText = textHan.replace(stopWordsRegex, '').replace(punctuationRegex, '');
+    let cleanedText = textHan.replace(stopWordsRegex, '').replace(/[^a-zA-Z\u4e00-\u9fff]/g, '');
 
     let chineseSurnames = [];
     try {
@@ -242,6 +242,6 @@ function phienAmToHanViet(text, minNameLength, maxNameLength, minRepeatCount, se
             resultText += char;
         }
     }
-    //console.log(resultText);
+//    console.log(resultText);
     return resultText.trim();
 }
