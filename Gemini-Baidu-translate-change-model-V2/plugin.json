@@ -2,7 +2,7 @@
   "metadata": {
     "name": "Gemini Baidu Translate change Model V2.0",
     "author": "3690",
-    "version": 2,
+    "version": 3,
     "source": "https://aistudio.google.com/apikey",
     "description": "Dịch văn bản bằng Google Gemini API với nhiều key, prompt, tùy chỉnh theo thể loại và xử lý lỗi an toàn thông minh. DONATE CHO ADMIN VBOOK NHIỀU LÊN ĐỂ VỪA CÓ TÊN ĐẸP, ADMIN LẠI CÓ THÊM ĐỘNG LỰC HOÀN THIỆN APP",
     "type": "translate"
@@ -64,7 +64,7 @@
       "default": "gemini-2.5-pro\ngemini-2.5-flash\ngemini-2.5-flash-preview-05-20\ngemini-2.0-flash-thinking-exp-01-21"
     },
     "listprompts": {
-      "title": "Danh sách tên prompts, mỗi tên trên 1 dòng, có thể nhập tên truyện Tiếng Việt",
+      "title": "Danh sách tên prompts, mỗi tên trên 1 dòng, có thể nhập tên truyện Tiếng Việt để tạo prompt cho từng truyện. Sau đó vào truyện, chọn dịch một chế độ bất kỳ để ext tạo prompt cho truyện, sau đó vào lại đây, tìm biến cục bộ có tên PROMPT_ + tên truyện vừa tạo, sửa prompt theo ý muốn rồi quay lại truyện chọn prompt này để dịch. Có thể tùy chỉnh thêm NAME của từng truyện để tăng độ chính xác của dịch",
       "mode": "input",
       "format": "text",
       "default": "Tu tiên\nTây huyễn"
