@@ -2,7 +2,7 @@
   "metadata": {
     "name": "Gemini Baidu Translate change Model V2.0",
     "author": "3690",
-    "version": 5,
+    "version": 6,
     "source": "https://aistudio.google.com/apikey",
     "description": "Dịch văn bản bằng Google Gemini API với nhiều key, prompt, tùy chỉnh theo thể loại và xử lý lỗi an toàn thông minh. DONATE CHO ADMIN VBOOK NHIỀU LÊN ĐỂ VỪA CÓ TÊN ĐẸP, ADMIN LẠI CÓ THÊM ĐỘNG LỰC HOÀN THIỆN APP",
     "type": "translate"
@@ -25,19 +25,19 @@
       "title": "Temperature - độ tăng giảm là 0.05 (0 - 2.0)",
       "mode": "input",
       "format": "number",
-      "default": 0.85
+      "default": 0.7
     },
     "topP": {
       "title": "TopP - độ tăng giảm là 0.05 (0 - 1.0)",
       "mode": "input",
       "format": "number",
-      "default": 0.2
+      "default": 0.6
     },
     "topK": {
       "title": "TopK - độ tăng giảm là 1 (0 - 100)",
       "mode": "input",
       "format": "number",
-      "default": 5
+      "default": 20
     },
     "minname": {
       "title": "Độ dài tên tối thiểu",
@@ -55,7 +55,7 @@
       "title": "Số lần xuất hiện tối thiểu để được xem là tên",
       "mode": "input",
       "format": "number",
-      "default": 7
+      "default": 6
     },
     "modelsavecache": {
       "title": "Danh sách Model sẽ lưu chương, mỗi Model nằm trên 1 dòng",
