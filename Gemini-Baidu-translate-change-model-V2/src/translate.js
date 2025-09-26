@@ -85,9 +85,9 @@ function callGeminiAPI(text, prompt, apiKey, model) {
     };
     try {
         var response = fetch(url, { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify(body) });
-        var responseText = response.text(); 
 
         if (response.ok) {
+            var responseText = response.text();
             var result = JSON.parse(responseText);
             if (result.candidates && result.candidates.length > 0) {
                 var candidate = result.candidates[0];
