@@ -32,7 +32,7 @@ var models = [
     "gemini-2.5-flash-lite"
 ];
 
-var pinyinOverlapThreshold = 0.95;
+var pinyinOverlapThreshold = 0.7;
 
 function generateFingerprintCacheKey(lines) {
     var keyParts = "";
@@ -342,7 +342,7 @@ function execute(text, from, to) {
 
         for (var m = 0; m < modelsToIterate.length; m++) {
             var currentModel = modelsToIterate[m];
-            var CHUNK_SIZE = 8000;
+            var CHUNK_SIZE = 5000;
             var MIN_LAST_CHUNK_SIZE = 500;
             if (currentModel === "gemini-2.5-pro") {
                 CHUNK_SIZE = 1500; MIN_LAST_CHUNK_SIZE = 100;
