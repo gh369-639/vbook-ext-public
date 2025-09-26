@@ -18,7 +18,7 @@ function execute(url) {
                 suggests.push ({
                     title: "Cùng tác giả",
                     input: doc.select('tbody tr:contains(Tác giả)').select("a").attr("href"),
-                    script: "gen3.js"
+                    script: "gen.js"
                     });
             return Response.success({
                 name: doc.select('tbody tr:contains(Tên truyện)').select("td").last().text(),
