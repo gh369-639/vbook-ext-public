@@ -1,10 +1,10 @@
 {
   "metadata": {
-    "name": "Truyện sexTV2",
+    "name": "Truyện sexTV",
     "author": "3690",
-    "version": 14,
-    "source": "https://truyensextv2.vip",
-    "regexp": "(www.)?truyensextv2.*?/[^/]+/?$",
+    "version": 1,
+    "source": "https://truyensextv99.com/",
+    "regexp": "https?:\\/\\/truyensextv\\d+\\.com\\/[^\\/]+",
     "description": "đọc truyện sex",
     "locale": "vi_VN",
     "type": "novel",
@@ -17,5 +17,13 @@
     "toc": "toc.js",
     "genre": "genre.js",
     "chap": "chap.js"
+  },
+  "config": {
+    "CONFIG_URL": {
+      "title": "Domain",
+      "mode": "input",
+      "format": "text",
+      "default": "https://truyensextv99.com"
+    }
   }
 }
