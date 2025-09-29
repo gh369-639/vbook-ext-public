@@ -4,14 +4,13 @@ let languages = [
     {"id": "gemini-2.0-flash-exp", "name": "Model: 2.0 Flash Exp gemini-2.0-flash-exp"},
     {"id": "gemini-2.0-flash-thinking-exp-01-21", "name": "2.0 thinking gemini-2.0-flash-thinking-exp-01-21"},
     {"id": "gemini-2.5-pro", "name": "Model: 2.5 Pro gemini-2.5-pro"},
-    {"id": "gemini-2.5-flash-preview-05-20", "name": "Model: 2.5 Flash Preview gemini-2.5-flash-preview-05-20"},
+    {"id": "gemini-2.5-flash-preview-09-2025", "name": "Model: 2.5 Flash Preview gemini-2.5-flash-preview-09-2025"},
     {"id": "gemini-2.5-flash", "name": "Model: 2.5 Flash gemini-2.5-flash"},
     {"id": "gemini-2.5-flash-lite", "name": "Model: 2.5 Flash Lite gemini-2.5-flash-lite"},
     {"id": "zh", "name": "Trung"},
     {"id": "en", "name": "Anh"},
     {"id": "vi", "name": "Việt"},
     {"id": "PROMPT_tieuchuan", "name": "Tiêu chuẩn"},
-    {"id": "PROMPT_NameEng", "name": "Name English"},
     {"id": "PROMPT_sac", "name": "Truyện Sắc"},
     {"id": "PROMPT_vietlai", "name": "Viết Lại Convert"},
     {"id": "PROMPT_xoacache", "name": "Xóa Cache Chương Này"}
@@ -41,5 +40,27 @@ try {
                 "name": name
             });
         });
+    }
+} catch (e) {}
+
+//Xử lý danh sách prompt có sử dụng phiên âm
+var prusepa_processed = [];
+
+try {
+    if (typeof prusepa !== 'undefined' && prusepa) {
+        let clean_prusepa = prusepa.replace(/^"([\s\S]*)"$/, "$1");
+
+        prusepa_processed = (clean_prusepa || "").split('\n')
+            .map(item => item.trim())
+            .filter(item => item !== "")
+            .map(namepa => {
+                let normalizedName = normalizeTextForId(namepa);
+
+                if (normalizedName.startsWith('prompt_')) {
+                    return "PROMPT_" + normalizedName.substring(7); 
+                } else {
+                    return "PROMPT_" + normalizedName;
+                }
+            });
     }
 } catch (e) {}
