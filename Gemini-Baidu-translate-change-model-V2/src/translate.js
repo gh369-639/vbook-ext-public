@@ -123,7 +123,7 @@ function translateChunkWithApiRetry(chunkText, prompt, modelToUse, keysToTry, is
                 result.message = "Kết quả trả về ngắn hơn 50% so với văn bản gốc.";
             }
             
-            if (isPinyinRoute && result.status === "success" && result.data.length > 800) {
+/*            if (isPinyinRoute && result.status === "success" && result.data.length > 800) {
                 var pinyinWords = getUniqueWords(chunkText);
                 var pinyinWordCount = Object.keys(pinyinWords).length;
                 
@@ -144,7 +144,7 @@ function translateChunkWithApiRetry(chunkText, prompt, modelToUse, keysToTry, is
                         result.message = "Dịch lỗi: Kết quả giống phiên âm " + Math.round(overlapPercentage * 100) + "% (ngưỡng " + (pinyinOverlapThreshold * 100) + "%).";
                     }
                 }
-            }
+            }*/
 
             if (result.status === "success") {
                 return result; 
