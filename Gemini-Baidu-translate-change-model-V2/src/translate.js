@@ -32,7 +32,7 @@ var models = [
     "gemini-2.5-flash-lite"
 ];
 
-var pinyinOverlapThreshold = 0.9;
+//var pinyinOverlapThreshold = 0.9;
 
 function generateFingerprintCacheKey(lines) {
     var keyParts = "";
@@ -383,8 +383,8 @@ function execute(text, from, to) {
                         chunkToSend = phienAmToHanViet(chunkToSend, minname, maxname, repeatname, to, prusepa_processed);
                     } catch (e) { return Response.error("LỖI: Không thể tải file phienam.js."); }
                 }
-                if (to === "PROMPT_sac") pinyinOverlapThreshold = 0.6;
-                if (to === "PROMPT_tieuchuan") pinyinOverlapThreshold = 0.7;
+//                if (to === "PROMPT_sac") pinyinOverlapThreshold = 0.6;
+//                if (to === "PROMPT_tieuchuan") pinyinOverlapThreshold = 0.7;
                 var chunkResult = translateChunkWithApiRetry(chunkToSend, selectedPrompt, currentModel, rotatedApiKeys, isPinyinRoute);
                 if (chunkResult.status === 'success') {
                     finalParts.push(chunkResult.data);
