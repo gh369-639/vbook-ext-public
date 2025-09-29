@@ -87,8 +87,7 @@ function callGeminiAPI(text, prompt, apiKey, model) {
         var response = fetch(url, { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify(body) });
 
         if (response.ok) {
-            var responseText = response.text();
-            var result = JSON.parse(responseText);
+            var result = response.json();
             if (result.candidates && result.candidates.length > 0) {
                 var candidate = result.candidates[0];
                 if (candidate.finishReason === "MAX_TOKENS") {
@@ -96,22 +95,19 @@ function callGeminiAPI(text, prompt, apiKey, model) {
                 }
                 if (candidate.content && candidate.content.parts && candidate.content.parts.length > 0 && candidate.content.parts[0].text) {
                     var textResult = candidate.content.parts[0].text.trim();
-                    if (/[\u4e00-\u9fff]/.test(textResult)) {
-                        return { status: "error", message: "Kết quả chứa Hán tự, không hợp lệ." };
-                    }
                     return { status: "success", data: textResult };
                 }
             }
             if (result.promptFeedback && result.promptFeedback.blockReason) { return { status: "blocked", message: "Bị chặn bởi Safety Settings: " + result.promptFeedback.blockReason }; }
             if (result.candidates && result.candidates.length > 0 && (!result.candidates[0].content || !result.candidates[0].content.parts)) { return { status: "blocked", message: "Bị chặn (không có nội dung trả về)." }; }
-            return { status: "error", message: "API không trả về nội dung hợp lệ. Phản hồi: " + responseText };
+            return { status: "error", message: "API không trả về nội dung hợp lệ. Phản hồi: " };
         } else {
-            return { status: "key_error", message: "Lỗi HTTP " + response.status + ". Phản hồi từ server:\n" + responseText };
+            return { status: "key_error", message: "Lỗi HTTP " + response.status + ". Phản hồi từ server:\n" };
         }
     } catch (e) { return { status: "error", message: "Ngoại lệ Javascript: " + e.toString() }; }
 }
 // hàm quản lý gọi api
-function translateChunkWithApiRetry(chunkText, prompt, modelToUse, keysToTry, isPinyinRoute) { 
+function translateChunkWithApiRetry(chunkText, prompt, modelToUse, keysToTry) { 
     var keyErrors = [];
     for (var i = 0; i < keysToTry.length; i++) {
         var apiKeyToUse = keysToTry[i];
@@ -122,29 +118,6 @@ function translateChunkWithApiRetry(chunkText, prompt, modelToUse, keysToTry, is
                 result.status = "short_result_error";
                 result.message = "Kết quả trả về ngắn hơn 50% so với văn bản gốc.";
             }
-            
-/*            if (isPinyinRoute && result.status === "success" && result.data.length > 800) {
-                var pinyinWords = getUniqueWords(chunkText);
-                var pinyinWordCount = Object.keys(pinyinWords).length;
-                
-                if (pinyinWordCount > 0) { 
-                    var translatedWords = getUniqueWords(result.data);
-                    var overlapCount = 0;
-                    
-                    for (var word in translatedWords) {
-                        if (pinyinWords[word]) { 
-                            overlapCount++;
-                        }
-                    }
-                    
-                    var overlapPercentage = overlapCount / Object.keys(translatedWords).length;
-                    
-                    if (overlapPercentage > pinyinOverlapThreshold) {
-                        result.status = "pinyin_overlap_error";
-                        result.message = "Dịch lỗi: Kết quả giống phiên âm " + Math.round(overlapPercentage * 100) + "% (ngưỡng " + (pinyinOverlapThreshold * 100) + "%).";
-                    }
-                }
-            }*/
 
             if (result.status === "success") {
                 return result; 
@@ -383,9 +356,8 @@ function execute(text, from, to) {
                         chunkToSend = phienAmToHanViet(chunkToSend, minname, maxname, repeatname, to, prusepa_processed);
                     } catch (e) { return Response.error("LỖI: Không thể tải file phienam.js."); }
                 }
-//                if (to === "PROMPT_sac") pinyinOverlapThreshold = 0.6;
-//                if (to === "PROMPT_tieuchuan") pinyinOverlapThreshold = 0.7;
-                var chunkResult = translateChunkWithApiRetry(chunkToSend, selectedPrompt, currentModel, rotatedApiKeys, isPinyinRoute);
+
+                var chunkResult = translateChunkWithApiRetry(chunkToSend, selectedPrompt, currentModel, rotatedApiKeys);
                 if (chunkResult.status === 'success') {
                     finalParts.push(chunkResult.data);
                 } else {
