@@ -7,13 +7,20 @@ var languageMap = {
 
 function baiduTranslateContent(text, from, to, retryCount) {
     if (retryCount > 5) return null;
-    if (from !== "zh" && from !== "en" && from !== "vi" && from !== "auto") from = "auto";
-    if (!from || from === "auto") {
+    if (from !== "zh" && from !== "en" && from !== "vi" && from !== "auto") {
+        if (/[\u4e00-\u9fff]/.test(text)) {
+            from = "zh"; 
+        } else {
+            from = "auto"; 
+        }
+    }
+    if (!from || from === "auto") { 
         from = baiduDetectLanguage(text);
     } else {
         from = languageMap[from] || from;
     }
     to = languageMap[to] || to;
+    if (to !== "zh" && to !== "en" && to !== "vie") to = "vie";
 
     var data = {
         query: text,
