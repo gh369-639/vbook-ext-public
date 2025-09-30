@@ -95,42 +95,37 @@ function translateChunkWithApiRetry(chunkText, prompt, modelToUse, keysToTry, fr
         let apiKeyToUse = keysToTry[i];
         let result = callGeminiAPI(chunkText, prompt, apiKeyToUse, modelToUse);
         
-    if (result.status === "success") {
-        const hanTuRegex = /[\u4e-00-\u9fff]/;
+        if (result.status === "success") {
+            const hanTuRegex = /[\u4e00-\u9fff]/;
+            if (hanTuRegex.test(result.data)) {
+                let chunklines = result.data.split('\n');
+                let processedLines = [];
 
-        if (hanTuRegex.test(result.data)) {
-            let chunklines = result.data.split('\n');
-            let processedLines = [];
-
-            for (let i = 0; i < chunklines.length; i++) {
-                let chunkline = chunklines[i];
-                
-                if (hanTuRegex.test(chunkline)) {
-                    
-                    let reTransResult = callGeminiAPI(chunkline, prompt, apiKeyToUse, modelToUse);
-                    
-                    if (reTransResult.status === 'success' && !hanTuRegex.test(reTransResult.data)) {
-                        processedLines.push(reTransResult.data);
+                for (let i = 0; i < chunklines.length; i++) {
+                    let chunkline = chunklines[i];
+                    if (hanTuRegex.test(chunkline)) {
+                        let reTransChunkLine = callGeminiAPI(chunkline, prompt, apiKeyToUse, modelToUse);
+                        if (reTransChunkLine.status === 'success' && !hanTuRegex.test(reTransChunkLine.data)) {
+                            processedLines.push(reTransChunkLine.data);
+                        } else {
+                            processedLines.push(chunkline);
+                        }
                     } else {
                         processedLines.push(chunkline);
                     }
-
-                } else {
-                    processedLines.push(chunkline);
                 }
+                result.data = processedLines.join('\n');
             }
-            result.data = processedLines.join('\n');
-        }
 
-        if ((result.data.length / chunkText.length) < 0.5) {
-            result.status = "short_result_error";
-            result.message = "Kết quả trả về ngắn hơn 50% so với văn bản gốc.";
-        }
+            if ((result.data.length / chunkText.length) < 0.5) {
+                result.status = "short_result_error";
+                result.message = "Kết quả trả về ngắn hơn 50% so với văn bản gốc.";
+            }
 
-        if (result.status === "success") {
-            return result; 
+            if (result.status === "success") {
+                return result; 
+            }
         }
-    }
         
         keyErrors.push("  + Key " + (i + 1) + " (" + apiKeyToUse.substring(0, 4) + "...):\n    " + result.message.replace(/\n/g, '\n    '));
         if (i < keysToTry.length - 1) {
@@ -178,6 +173,7 @@ function execute(text, from, to) {
     if (!text || text.trim() === '') {
         return Response.success("?");
     }
+// Xử lý gộp key từ config và localStorage
     var combinedApiKeys = [].concat(apiKeys); 
 
     let uniqueKeys = [];
@@ -304,7 +300,7 @@ function execute(text, from, to) {
         for (let m = 0; m < modelsToIterate.length; m++) {
             let currentModel = modelsToIterate[m];
             let CHUNK_SIZE = 2000;
-            let MIN_LAST_CHUNK_SIZE = 500;
+            let MIN_LAST_CHUNK_SIZE = 100;
             if (currentModel === "gemini-2.5-pro") {
                 CHUNK_SIZE = 1500; MIN_LAST_CHUNK_SIZE = 100;
             } else if (currentModel === "gemini-2.5-flash" || currentModel === "gemini-2.5-flash-preview-09-2025" || currentModel === "gemini-2.0-flash-thinking-exp-01-21" || currentModel === "gemini-2.0-flash-exp") {
@@ -315,6 +311,7 @@ function execute(text, from, to) {
             let textChunks = [];
             let currentChunk = "";
             let currentChunkLineCount = 0;
+//            const MAX_LINES_PER_CHUNK = 500;
             for (let i = 0; i < lines.length; i++) {
                 let paragraph = lines[i];
                 if (currentChunk.length === 0 && paragraph.length >= CHUNK_SIZE) {
@@ -358,7 +355,7 @@ function execute(text, from, to) {
                 }
             }
             if (!currentModelFailed) {
-                finalContent = finalParts.join('\n\n'); 
+                finalContent = finalParts.join('\n\n'); //modelsucess + " . " + 
                 finalContent = finalContent.replace(/\*/g, '').trim();
                 translationSuccessful = true;
                 break; 
