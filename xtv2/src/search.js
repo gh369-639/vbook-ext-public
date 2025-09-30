@@ -1,55 +1,50 @@
-load("config.js");
+load('config.js');
+
 function execute(key, page) {
-  if (!page) page = '1';
-  let payload = [
-    'rsz=20',
-    'num=20',
-    'hl=vi',
-    'source=gcsc',
-    'cselibv=6467658b9628de43',
-    'cx=7b917725a0db8f5bb',
-    'q=' + encodeURIComponent(key),
-    'safe=off',
-    'cse_tok=AEXjvhL-rHVg5r6Y5fvvECm3XJga%3A1758865654619',
-    'lr=',
-    'cr=',
-    'gl=',
-    'filter=0',
-    'sort=',
-    'as_oq=sex',
-    'as_sitesearch=',
-    'exp=cc%2Capo',
-    'oq=' + encodeURIComponent(key),
-    'gs_l=partner-generic.12...22433.25138.0.34855.46.21.0.0.0.1.190.1878.12j9.21.0.csems%2Cnrl%3D10...0....1.34.partner-generic..46.0.0.7rVL93cRym8',
-    'callback=google.search.cse.api9418',
-    'rurl=https%3A%2F%2Ftruyensextv99.com%2Ftim-kiem%2F%23gsc.tab%3D0',
-    'start=' + ((page-1)*20)
-  ].join('&');
-  let url = 'https://cse.google.com/cse/element/v1?' + payload;
-  let response = fetch(url);
-  let data = [];
-  if (response.ok) {
-    // Kết quả trả về là một chuỗi dạng: google.search.cse.api9418({...})
-    let text = response.text();
-    // Loại bỏ callback, chỉ lấy phần JSON bên trong
-    let start = text.indexOf('(');
-    let end = text.lastIndexOf(')');
-    if (start !== -1 && end !== -1) {
-        let jsonText = text.substring(start + 1, end);
-        let obj = JSON.parse(jsonText);
-        //console.log(jsonText);
-        if (obj.results && obj.results.length > 0) {
-          obj.results.forEach(e => {
-            data.push({
-              "name": e.titleNoFormatting || '',
-              "link": e.url || '',
-              "description": e.contentNoFormatting || '',
-              "host": (e.visibleUrl && !/^https?:\/\//i.test(e.visibleUrl) ? 'https://' + e.visibleUrl : e.visibleUrl) || ''
-            });
-          });
+    if (!page || page < 1) page = 1;
+
+    const searchQuery = key + " truyện sex";
+
+    const baseUrl = BASE_URL + "/tim-kiem/";
+    const searchParams = `#gsc.tab=0&gsc.q=${encodeURIComponent(searchQuery)}&gsc.page=${page}`;
+    const targetUrl = baseUrl + searchParams;
+
+    let data = [];
+    let browser = Engine.newBrowser();
+    try {
+        browser.launch(targetUrl, 3000);
+
+        let retry = 0;
+        while (retry < 30) { 
+            sleep(100);
+            let doc = browser.html();
+            if (doc.select(".gsc-webResult.gsc-result").length > 0) {
+                break;
+            }
+            retry++;
         }
-        return Response.success(data);
+        
+        let finalDoc = browser.html();
+        if (finalDoc.select(".gsc-webResult.gsc-result").length === 0) {
+            browser.close();
+            return Response.success([]);
+        }
+
+        finalDoc.select(".gsc-webResult.gsc-result").forEach(e => {
+            let titleElement = e.select("a.gs-title").first();
+            let link = titleElement.attr("href");
+            let name = titleElement.text();
+            if (name && link) {
+                data.push({
+                    "name": name,
+                    "link": link,
+                    "host": BASE_URL
+                });
+            }
+        });
+    } catch (error) {}
+    finally {
+        browser.close();
     }
-  }
-  return null;
+    return Response.success(data, parseInt(page) + 1);
 }

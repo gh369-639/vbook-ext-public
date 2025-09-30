@@ -2,7 +2,7 @@
   "metadata": {
     "name": "Truyện sexTV",
     "author": "3690",
-    "version": 3,
+    "version": 4,
     "source": "https://truyensextv99.com/",
     "regexp": "https?:\\/\\/truyensextv\\d+\\.com\\/.+$",
     "description": "đọc truyện sex",
