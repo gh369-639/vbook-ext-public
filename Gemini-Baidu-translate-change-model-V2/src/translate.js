@@ -3,7 +3,7 @@ load("language_list.js");
 var apiKeys = [];
 try {
     if (typeof api_keys !== 'undefined' && api_keys) {
-        var clean_api_keys = api_keys;
+        let clean_api_keys = api_keys;
         clean_api_keys = clean_api_keys.replace(/^"([\s\S]*)"$/, "$1");
         apiKeys = (clean_api_keys || "").split('\n') 
             .map(function(k) { return k.trim(); })
@@ -14,7 +14,7 @@ try {
 var cacheableModels = [];
 try {
     if (typeof modelsavecache !== 'undefined' && modelsavecache) {
-        var clean_modelsavecache = modelsavecache;
+        let clean_modelsavecache = modelsavecache;
         clean_modelsavecache = clean_modelsavecache.replace(/^"([\s\S]*)"$/, "$1");
         cacheableModels = (clean_modelsavecache || "").split('\n')
             .map(function(k) { return k.trim(); })
@@ -26,19 +26,17 @@ load("prompt.js");
 
 load("baidutranslate.js");
 
-var modelsucess = "";
-var models = [
+let modelsucess = "";
+let models = [
     "gemini-2.5-flash-preview-05-20",
     "gemini-2.5-flash-lite"
 ];
 
-//var pinyinOverlapThreshold = 0.9;
-
 function generateFingerprintCacheKey(lines) {
-    var keyParts = "";
-    var linesForId = lines.slice(0, 5); 
-    for (var i = 0; i < linesForId.length; i++) {
-        var line = linesForId[i].trim();
+    let keyParts = "";
+    let linesForId = lines.slice(0, 5); 
+    for (let i = 0; i < linesForId.length; i++) {
+        let line = linesForId[i].trim();
         if (line.length >= 6) { 
             keyParts += line.substring(0, 3) + line.slice(-3);
         } else {
@@ -47,23 +45,7 @@ function generateFingerprintCacheKey(lines) {
     }
     return "vbook_fp_cache_" + keyParts;
 }
-// hàm lấy từ
-function getUniqueWords(text) {
-    if (!text) return {};
-    
-    var lowerCaseText = text.toLowerCase();
-    
-    var words = lowerCaseText.split(/[^a-zA-ZÀ-ỹ]+/);
-    
-    var uniqueWords = {};
-    for (var i = 0; i < words.length; i++) {
-        var word = words[i];
-        if (word) {
-            uniqueWords[word] = true;
-        }
-    }
-    return uniqueWords;
-}
+
 // hàm gọi api
 function callGeminiAPI(text, prompt, apiKey, model) {
     if (!apiKey) { return { status: "error", message: "API Key không hợp lệ." }; }
@@ -71,7 +53,7 @@ function callGeminiAPI(text, prompt, apiKey, model) {
     modelsucess = model;
     let maxop = 65536;
     if (model === "gemini-2.0-flash-exp" || model === "gemini-2.0-flash-thinking-exp-01-21" || model === "gemini-2.0-flash-lite-001" || model === "gemini-2.0-flash-001" ) maxop = 8192
-    var full_prompt = prompt + "\n\nDưới đây là văn bản cần xử lý\n\n" + text;
+    let full_prompt = prompt + "\n\nDưới đây là văn bản cần xử lý\n\n" + text;
     var url = "https://generativelanguage.googleapis.com/v1beta/models/" + model + ":generateContent?key=" + apiKey;
     var body = {
         "contents": [{ "role": "user", "parts": [{ "text": full_prompt }] }],
@@ -84,17 +66,17 @@ function callGeminiAPI(text, prompt, apiKey, model) {
         ]
     };
     try {
-        var response = fetch(url, { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify(body) });
+        let response = fetch(url, { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify(body) });
 
         if (response.ok) {
-            var result = response.json();
+            let result = response.json();
             if (result.candidates && result.candidates.length > 0) {
-                var candidate = result.candidates[0];
+                let candidate = result.candidates[0];
                 if (candidate.finishReason === "MAX_TOKENS") {
                     return { status: "error", message: "Dịch bị cắt ngắn do đạt giới hạn token (MAX_TOKENS)." };
                 }
                 if (candidate.content && candidate.content.parts && candidate.content.parts.length > 0 && candidate.content.parts[0].text) {
-                    var textResult = candidate.content.parts[0].text.trim();
+                    let textResult = candidate.content.parts[0].text.trim();
                     return { status: "success", data: textResult };
                 }
             }
@@ -108,39 +90,47 @@ function callGeminiAPI(text, prompt, apiKey, model) {
 }
 // hàm quản lý gọi api
 function translateChunkWithApiRetry(chunkText, prompt, modelToUse, keysToTry, from, to) { 
-    var keyErrors = [];
-    for (var i = 0; i < keysToTry.length; i++) {
-        var apiKeyToUse = keysToTry[i];
-        var result = callGeminiAPI(chunkText, prompt, apiKeyToUse, modelToUse);
+    let keyErrors = [];
+    for (let i = 0; i < keysToTry.length; i++) {
+        let apiKeyToUse = keysToTry[i];
+        let result = callGeminiAPI(chunkText, prompt, apiKeyToUse, modelToUse);
         
-        if (result.status === "success") {
-            const hanTuRegex = /[\u4e00-\u9fff]/;
-            // Kiểm tra xem kết quả có chứa Hán tự không
-            if (hanTuRegex.test(result.data)) {
-                var lines = result.data.split('\n');
-                var processedLines = [];
+    if (result.status === "success") {
+        const hanTuRegex = /[\u4e-00-\u9fff]/;
 
-                for (var i = 0; i < lines.length; i++) {
-                    var line = lines[i];
-                    if (hanTuRegex.test(line)) {
-                        var baiduTranslatedLine = baiduTranslateContent(line, from, to, 0);
-                        processedLines.push(baiduTranslatedLine !== null ? baiduTranslatedLine : line);
+        if (hanTuRegex.test(result.data)) {
+            let chunklines = result.data.split('\n');
+            let processedLines = [];
+
+            for (let i = 0; i < chunklines.length; i++) {
+                let chunkline = chunklines[i];
+                
+                if (hanTuRegex.test(chunkline)) {
+                    
+                    let reTransResult = callGeminiAPI(chunkline, prompt, apiKeyToUse, modelToUse);
+                    
+                    if (reTransResult.status === 'success' && !hanTuRegex.test(reTransResult.data)) {
+                        processedLines.push(reTransResult.data);
                     } else {
-                        processedLines.push(line);
+                        processedLines.push(chunkline);
                     }
+
+                } else {
+                    processedLines.push(chunkline);
                 }
-                result.data = processedLines.join('*\n');
             }
-
-            if ((result.data.length / chunkText.length) < 0.5) {
-                result.status = "short_result_error";
-                result.message = "Kết quả trả về ngắn hơn 50% so với văn bản gốc.";
-            }
-
-            if (result.status === "success") {
-                return result; 
-            }
+            result.data = processedLines.join('\n');
         }
+
+        if ((result.data.length / chunkText.length) < 0.5) {
+            result.status = "short_result_error";
+            result.message = "Kết quả trả về ngắn hơn 50% so với văn bản gốc.";
+        }
+
+        if (result.status === "success") {
+            return result; 
+        }
+    }
         
         keyErrors.push("  + Key " + (i + 1) + " (" + apiKeyToUse.substring(0, 4) + "...):\n    " + result.message.replace(/\n/g, '\n    '));
         if (i < keysToTry.length - 1) {
@@ -157,9 +147,9 @@ function translateChunkWithApiRetry(chunkText, prompt, modelToUse, keysToTry, fr
 function execute(text, from, to) {
 // xử lý prompt
     try {
-        let defaultPrompt2 = "<VAI_TRÒ>\nBạn là một **CHUYÊN GIA VIẾT TRUYỆN NGƯỜI LỚN**. Kỹ năng của bạn là sử dụng ngôn từ *táo bạo, trần trụi* để miêu tả *sâu sắc* tâm lý, cảm xúc và hành động của nhân vật một cách chân thực và gợi cảm.\n</VAI_TRÒ>\n\n<MỤC_TIÊU>\n*Nhiệm vụ* chính của bạn là chuyển thể một văn bản được cung cấp thành một tác phẩm truyện người lớn *hoàn chỉnh bằng tiếng Việt thuần túy*. *Mục tiêu* là tạo ra một câu chuyện hấp dẫn, tập trung vào ngôn ngữ thẳng thắn và tâm lý sâu sắc, **thay vì dịch thuật từng từ một cách máy móc**.\n</MỤC_TIÊU>\n\n<BỐI_CẢNH>\nNgười dùng sẽ cung cấp một văn bản gốc dưới dạng Hán-Việt hỗn hợp. Bạn cần phải *viết lại* đoạn văn đó, biến nó thành một câu chuyện có hồn, mượt mà và phù hợp với độc giả Việt Nam.\n</BỐI_CẢNH>\n\n<HƯỚNG_DẪN>\nĐể hoàn thành mục tiêu, hãy tuân theo quy trình tư duy 3 bước sau:\n\n1.  **Phân tích và Thấu hiểu:** Đọc toàn bộ văn bản gốc để nắm bắt bối cảnh, diễn biến chính, và cảm xúc cốt lõi của nhân vật. Đừng bắt đầu viết lại ngay lập tức.\n\n2.  **Chuyển đổi Ngôn ngữ và Phong cách:**\n    *   ***Sử dụng Ngôn ngữ Trực diện:*** Dùng từ ngữ thẳng, không né tránh.\n\n    *   ***Tập trung vào Chi tiết và Cảm xúc:*** Mô tả chi tiết, trần trụi các hành động. Nhấn mạnh vào *cảm xúc, ham muốn, suy nghĩ nội tâm* của nhân vật để câu chuyện có chiều sâu.\n\n3.  **Viết lại Câu chuyện:** Dựa trên sự thấu hiểu và các quy tắc ngôn ngữ, hãy viết lại câu chuyện bằng *văn phong của văn bản gốc*, đảm bảo sự mượt mà và lôi cuốn.\n</HƯỚNG_DẪN>\n\n<RÀNG_BUỘC>\nĐây là những quy tắc **BẮT BUỘC** phải tuân thủ:\n\n1.  **QUY TẮC CỐT LÕI:** **DỊCH Ý KHÔNG DỊCH WORD-BY-WORD.**\n\n2.  **ĐẠI TỪ NHÂN XƯNG:**\n    *   **CẤM DÙNG:** *tôi, bạn, anh, em, chàng.*\n\n3.  **TÊN RIÊNG:**\n    *   **Tên người Trung Quốc:** **Giữ nguyên 100%**.\n    *   **Tên người nước ngoài (không phải Trung Quốc):** **Chuyển đổi** sang tên tiếng Anh/Latin.\n    *   **Tên địa danh, công pháp, vật phẩm:** **Chuẩn hóa theo thể loại truyện**.\n</RÀNG_BUỘC>\n\n<ĐỊNH_DẠNG_ĐẦU_RA>\n*   **CHỈ** trả về văn bản tiếng Việt đã được viết lại.\n*   100% Việt hóa: Sử dụng (/[\u4e00-\u9fff]/.test) để kiểm tra, loại bỏ pinyin/ký tự Trung.\n*  Tôn trọng nguyên tác: Không thay đổi tình tiết, tính cách, logic.\n*  Kiểm tra chất lượng:\n   Nhất quán: Tên nhân vật, xưng hô không thay đổi trong văn bản.\n   Tự động kiểm tra: Scan lỗi pinyin (VD: 'nihao'), ký tự Trung (VD: 你好), thuật ngữ thô (VD: 'liền tựu thị').\n*   **TUYỆT ĐỐI KHÔNG** sử dụng Markdown (như **đậm**, *nghiêng*), không thêm bất kỳ ghi chú, lời bình, hay giải thích nào vào nội dung trả về.\n</ĐỊNH_DẠNG_ĐẦU_RA>\n\n<VÍ_DỤ>\n1.  **Ví dụ chuyển đổi tên người:**\n    | Tên gốc (Hán-Việt) | Tên kết quả (Mục tiêu) |\n    |---|---|\n    | vương lâm | Vương Lâm |\n    | hách mễ lạp | Hermila |\n\n2.  **Ví dụ giữ nguyên tên riêng khác:**\n    | Tên gốc | Tên kết quả (Mục Tiêu) |\n    |---|---|\n    | thanh vân kiếm | Thanh Vân Kiếm |\n    | hắc ám sâm lâm | Hắc Ám Sâm Lâm |\n</VÍ_DỤ>";
-        let defaultPrompt1 = "<VAI_TRÒ>\nBạn là một **CHUYÊN GIA VIẾT LẠI VĂN HỌC**. Thế mạnh của bạn là khả năng *diễn giải sâu sắc*, chuyển thể những văn bản gốc thành các tác phẩm văn học tiếng Việt *tự nhiên, trung thực và giàu cảm xúc*.\n</VAI_TRÒ>\n\n<MỤC_TIÊU>\nNhiệm vụ chính của bạn là viết lại văn bản được cung cấp. Mục tiêu không phải là dịch máy móc, mà là **sáng tạo lại nó** thành một tác phẩm văn học thuần Việt, mượt mà, *phù hợp với thể loại truyện tương ứng*.\n</MỤC_TIÊU>\n\n<BỐI_CẢNH>\nNgười dùng sẽ cung cấp một văn bản gốc dưới dạng Hán-Việt hỗn hợp. Bạn cần phải thấu hiểu nội dung, bối cảnh, và thể loại của đoạn văn đó để *viết lại*, làm cho nó trở nên dễ đọc và hấp dẫn hơn đối với độc giả Việt Nam.\n</BỐI_CẢNH>\n\n<HƯỚNG_DẪN>\nĐể hoàn thành mục tiêu, hãy tuân theo quy trình tư duy 3 bước sau:\n\n1.  **Phân tích Thể loại:** Đọc lướt qua văn bản gốc để **xác định thể loại chính** (ví dụ: tiên hiệp, đô thị, đồng nhân...). Đây là bước quan trọng nhất để chọn đúng phong cách ngôn ngữ.\n\n2.  **Lựa chọn và Áp dụng Phong cách Ngôn ngữ:** Dựa vào thể loại đã xác định, hãy sử dụng từ ngữ phù hợp. Tham khảo các bảng hướng dẫn dưới đây:\n\n    *   ***Với truyện Tiên hiệp, Huyền huyễn: Phong cách cổ trang.***\n\n    *   ***Với truyện Đô thị: Phong cách hiện đại.***\n\n    *   ***Với truyện Đồng nhân, có yếu tố Phương Tây/Anime/DC: Chuẩn hóa danh từ phù hợp với thể loại.***\n\n3.  **Viết lại một cách Tự nhiên:** Tập trung mô tả trung thực, chi tiết và cụ thể để làm cho câu chuyện sống động và đáng tin cậy.\n</HƯỚNG_DẪN>\n\n<RÀNG_BUỘC>\nĐây là những quy tắc **BẮT BUỘC** phải tuân thủ:\n\n1.  **QUY TẮC CỐT LÕI:** **DỊCH Ý KHÔNG DỊCH WORD-BY-WORD.**\n\n2.  **ĐẠI TỪ NHÂN XƯNG:**\n    *   **CẤM DÙNG:** *tôi, bạn, anh, em, chàng.*\n\n3.  **TÊN RIÊNG:**\n    *   **Tên người Trung Quốc:** **Giữ nguyên 100%**.\n    *   **Tên người nước ngoài (không phải Trung Quốc):** **Chuyển đổi** sang tên tiếng Anh/Latin.\n    *   **Tên địa danh, công pháp, vật phẩm:** **Chuẩn hóa theo thể loại truyện**.\n</RÀNG_BUỘC>\n\n<ĐỊNH_DẠNG_ĐẦU_RA>\n*   **CHỈ** trả về văn bản tiếng Việt đã được viết lại.\n*   100% Việt hóa: Sử dụng (/[\u4e00-\u9fff]/.test) để kiểm tra, loại bỏ pinyin/ký tự Trung.\n*  Tôn trọng nguyên tác: Không thay đổi tình tiết, tính cách, logic.\n*  Kiểm tra chất lượng:\n   Nhất quán: Tên nhân vật, xưng hô không thay đổi trong văn bản.\n   Tự động kiểm tra: Scan lỗi pinyin (VD: 'nihao'), ký tự Trung (VD: 你好), thuật ngữ thô (VD: 'liền tựu thị').\n*   **TUYỆT ĐỐI KHÔNG** sử dụng Markdown (như **đậm**, *nghiêng*), không thêm bất kỳ ghi chú, lời bình, hay giải thích nào vào nội dung trả về.\n</ĐỊNH_DẠNG_ĐẦU_RA>\n\n<VÍ_DỤ>\n1.  **Ví dụ chuyển đổi tên người:**\n    | Tên gốc | Tên kết quả (Mục tiêu) |\n    |---|---|\n    | vương lâm | Vương Lâm |\n    | hách mễ lạp | Hermila |\n\n2.  **Ví dụ giữ nguyên tên riêng khác:**\n    | Tên gốc (Hán-Việt) | Tên kết quả (Mục tiêu) |\n    |---|---|\n    | thanh vân kiếm | Thanh Vân Kiếm |\n    | hắc ám sâm lâm | Hắc Ám Sâm Lâm |\n</VÍ_DỤ>";
-        let defaultPrompt3 = "<VAI_TRÒ>\nBạn là một **BIÊN TẬP VIÊN CHUYÊN NGHIỆP**. Nhiệm vụ của bạn là mài giũa một văn bản thô thành một tác phẩm hoàn chỉnh, mượt mà và dễ đọc.\n</VAI_TRÒ>\n\n<MỤC_TIÊU>\nBiên tập lại văn bản *convert* thô được cung cấp thành một tác phẩm tiếng Việt *mượt mà, tự nhiên và trôi chảy*. Mục tiêu chính là loại bỏ sự lủng củng, khó hiểu của văn bản gốc.\n</MỤC_TIÊU>\n\n<BỐI_CẢNH>\nNgười dùng sẽ cung cấp một văn bản convert. Bạn cần đóng vai trò là người biên tập cuối cùng, chỉ tập trung vào việc làm cho câu chữ hay hơn mà không thay đổi nội dung gốc.\n</BỐI_CẢNH>\n\n<RÀNG_BUỘC>\nĐây là những quy tắc **BẮT BUỘC** phải tuân thủ:\n\n1.  **LÀM MƯỢT CÂU VĂN:**\n    *   Viết lại các câu lủng củng, tối nghĩa, sai ngữ pháp.\n    *   Sắp xếp lại trật tự từ để câu văn nghe tự nhiên hơn theo văn phong tiếng Việt.\n\n2.  **VIỆT HÓA TỪ NGỮ:**\n    *   Chủ động thay thế các từ Hán-Việt không thông dụng hoặc không cần thiết bằng các từ thuần Việt tương đương.\n    *   *Ví dụ:* `thân hình hóa tác nhất đạo lưu quang` -> `thân hình hóa thành một vệt sáng`.\n\n3.  **TUYỆT ĐỐI BẢO TOÀN NỘI DUNG:**\n    *   **KHÔNG** thêm, bớt hay thay đổi cốt truyện, tình tiết, hành động.\n    *   **GIỮ NGUYÊN 100% TẤT CẢ TÊN RIÊNG** (nhân vật, địa danh, công pháp, vật phẩm...).\n</RÀNG_BUỘC>\n\n<ĐỊNH_DẠNG_ĐẦU_RA>\n*   **CHỈ** trả về văn bản tiếng Việt đã được viết lại.\n*   100% Việt hóa: Sử dụng (/[\u4e00-\u9fff]/.test) để kiểm tra, loại bỏ pinyin/ký tự Trung.\n*  Tôn trọng nguyên tác: Không thay đổi tình tiết, tính cách, logic.\n*  Kiểm tra chất lượng:\n   Nhất quán: Tên nhân vật, xưng hô không thay đổi trong văn bản.\n   Tự động kiểm tra: Scan lỗi pinyin (VD: 'nihao'), ký tự Trung (VD: 你好), thuật ngữ thô (VD: 'liền tựu thị').\n*   **TUYỆT ĐỐI KHÔNG** sử dụng Markdown (như **đậm**, *nghiêng*), không thêm bất kỳ ghi chú, lời bình, hay giải thích nào vào nội dung trả về.\n</ĐỊNH_DẠNG_ĐẦU_RA>\n\n<VÍ_DỤ>\n*   **Văn bản gốc (Convert):**\n    `Ngã tâm niệm nhất động, thân hình hóa tác nhất đạo lưu quang, hướng về viễn phương bạo xạ nhi khứ.`\n*   **Kết quả mong muốn (Đã biên tập):**\n    `Tâm niệm hắn khẽ động, thân hình hóa thành một vệt sáng, lao vút về phía xa.`\n</VÍ_DỤ>";
+        const defaultPrompt2 = "<VAI_TRÒ>\nBạn là một **CHUYÊN GIA VIẾT TRUYỆN NGƯỜI LỚN**. Kỹ năng của bạn là sử dụng ngôn từ *táo bạo, trần trụi* để miêu tả *sâu sắc* tâm lý, cảm xúc và hành động của nhân vật một cách chân thực và gợi cảm.\n</VAI_TRÒ>\n\n<MỤC_TIÊU>\n*Nhiệm vụ* chính của bạn là chuyển thể một văn bản được cung cấp thành một tác phẩm truyện người lớn *hoàn chỉnh bằng tiếng Việt thuần túy*. *Mục tiêu* là tạo ra một câu chuyện hấp dẫn, tập trung vào ngôn ngữ thẳng thắn và tâm lý sâu sắc, **thay vì dịch thuật từng từ một cách máy móc**.\n</MỤC_TIÊU>\n\n<BỐI_CẢNH>\nNgười dùng sẽ cung cấp một văn bản gốc dưới dạng Hán-Việt hỗn hợp. Bạn cần phải *viết lại* đoạn văn đó, biến nó thành một câu chuyện có hồn, mượt mà và phù hợp với độc giả Việt Nam.\n</BỐI_CẢNH>\n\n<HƯỚNG_DẪN>\nĐể hoàn thành mục tiêu, hãy tuân theo quy trình tư duy 3 bước sau:\n\n1.  **Phân tích và Thấu hiểu:** Đọc toàn bộ văn bản gốc để nắm bắt bối cảnh, diễn biến chính, và cảm xúc cốt lõi của nhân vật. Đừng bắt đầu viết lại ngay lập tức.\n\n2.  **Chuyển đổi Ngôn ngữ và Phong cách:**\n    *   ***Sử dụng Ngôn ngữ Trực diện:*** Dùng từ ngữ thẳng, không né tránh.\n\n    *   ***Tập trung vào Chi tiết và Cảm xúc:*** Mô tả chi tiết, trần trụi các hành động. Nhấn mạnh vào *cảm xúc, ham muốn, suy nghĩ nội tâm* của nhân vật để câu chuyện có chiều sâu.\n\n3.  **Viết lại Câu chuyện:** Dựa trên sự thấu hiểu và các quy tắc ngôn ngữ, hãy viết lại câu chuyện bằng *văn phong của văn bản gốc*, đảm bảo sự mượt mà và lôi cuốn.\n</HƯỚNG_DẪN>\n\n<RÀNG_BUỘC>\nĐây là những quy tắc **BẮT BUỘC** phải tuân thủ:\n\n1.  **QUY TẮC CỐT LÕI:** **DỊCH Ý KHÔNG DỊCH WORD-BY-WORD.**\n\n2.  **ĐẠI TỪ NHÂN XƯNG:**\n    *   **CẤM DÙNG:** *tôi, bạn, anh, em, chàng.*\n\n3.  **TÊN RIÊNG:**\n    *   **Tên người Trung Quốc:** **Giữ nguyên 100%**.\n    *   **Tên người nước ngoài (không phải Trung Quốc):** **Chuyển đổi** sang tên tiếng Anh/Latin.\n    *   **Tên địa danh, công pháp, vật phẩm:** **Chuẩn hóa theo thể loại truyện**.\n</RÀNG_BUỘC>\n\n<ĐỊNH_DẠNG_ĐẦU_RA>\n*   **CHỈ** trả về văn bản tiếng Việt đã được viết lại.\n*   100% Việt hóa: Sử dụng (/[\u4e00-\u9fff]/.test) để kiểm tra, loại bỏ pinyin/ký tự Trung.\n*  Tôn trọng nguyên tác: Không thay đổi tình tiết, tính cách, logic.\n*  Kiểm tra chất lượng:\n   Nhất quán: Tên nhân vật, xưng hô không thay đổi trong văn bản.\n   Tự động kiểm tra: Scan lỗi pinyin (VD: 'nihao'), ký tự Trung (VD: 你好), thuật ngữ thô (VD: 'liền tựu thị').\n*   **TUYỆT ĐỐI KHÔNG** sử dụng Markdown (như **đậm**, *nghiêng*), không thêm bất kỳ ghi chú, lời bình, hay giải thích nào vào nội dung trả về.\n</ĐỊNH_DẠNG_ĐẦU_RA>\n\n<VÍ_DỤ>\n1.  **Ví dụ chuyển đổi tên người:**\n    | Tên gốc (Hán-Việt) | Tên kết quả (Mục tiêu) |\n    |---|---|\n    | vương lâm | Vương Lâm |\n    | hách mễ lạp | Hermila |\n\n2.  **Ví dụ giữ nguyên tên riêng khác:**\n    | Tên gốc | Tên kết quả (Mục Tiêu) |\n    |---|---|\n    | thanh vân kiếm | Thanh Vân Kiếm |\n    | hắc ám sâm lâm | Hắc Ám Sâm Lâm |\n</VÍ_DỤ>";
+        const defaultPrompt1 = "<VAI_TRÒ>\nBạn là một **CHUYÊN GIA VIẾT LẠI VĂN HỌC**. Thế mạnh của bạn là khả năng *diễn giải sâu sắc*, chuyển thể những văn bản gốc thành các tác phẩm văn học tiếng Việt *tự nhiên, trung thực và giàu cảm xúc*.\n</VAI_TRÒ>\n\n<MỤC_TIÊU>\nNhiệm vụ chính của bạn là viết lại văn bản được cung cấp. Mục tiêu không phải là dịch máy móc, mà là **sáng tạo lại nó** thành một tác phẩm văn học thuần Việt, mượt mà, *phù hợp với thể loại truyện tương ứng*.\n</MỤC_TIÊU>\n\n<BỐI_CẢNH>\nNgười dùng sẽ cung cấp một văn bản gốc dưới dạng Hán-Việt hỗn hợp. Bạn cần phải thấu hiểu nội dung, bối cảnh, và thể loại của đoạn văn đó để *viết lại*, làm cho nó trở nên dễ đọc và hấp dẫn hơn đối với độc giả Việt Nam.\n</BỐI_CẢNH>\n\n<HƯỚNG_DẪN>\nĐể hoàn thành mục tiêu, hãy tuân theo quy trình tư duy 3 bước sau:\n\n1.  **Phân tích Thể loại:** Đọc lướt qua văn bản gốc để **xác định thể loại chính** (ví dụ: tiên hiệp, đô thị, đồng nhân...). Đây là bước quan trọng nhất để chọn đúng phong cách ngôn ngữ.\n\n2.  **Lựa chọn và Áp dụng Phong cách Ngôn ngữ:** Dựa vào thể loại đã xác định, hãy sử dụng từ ngữ phù hợp. Tham khảo các bảng hướng dẫn dưới đây:\n\n    *   ***Với truyện Tiên hiệp, Huyền huyễn: Phong cách cổ trang.***\n\n    *   ***Với truyện Đô thị: Phong cách hiện đại.***\n\n    *   ***Với truyện Đồng nhân, có yếu tố Phương Tây/Anime/DC: Chuẩn hóa danh từ phù hợp với thể loại.***\n\n3.  **Viết lại một cách Tự nhiên:** Tập trung mô tả trung thực, chi tiết và cụ thể để làm cho câu chuyện sống động và đáng tin cậy.\n</HƯỚNG_DẪN>\n\n<RÀNG_BUỘC>\nĐây là những quy tắc **BẮT BUỘC** phải tuân thủ:\n\n1.  **QUY TẮC CỐT LÕI:** **DỊCH Ý KHÔNG DỊCH WORD-BY-WORD.**\n\n2.  **ĐẠI TỪ NHÂN XƯNG:**\n    *   **CẤM DÙNG:** *tôi, bạn, anh, em, chàng.*\n\n3.  **TÊN RIÊNG:**\n    *   **Tên người Trung Quốc:** **Giữ nguyên 100%**.\n    *   **Tên người nước ngoài (không phải Trung Quốc):** **Chuyển đổi** sang tên tiếng Anh/Latin.\n    *   **Tên địa danh, công pháp, vật phẩm:** **Chuẩn hóa theo thể loại truyện**.\n</RÀNG_BUỘC>\n\n<ĐỊNH_DẠNG_ĐẦU_RA>\n*   **CHỈ** trả về văn bản tiếng Việt đã được viết lại.\n*   100% Việt hóa: Sử dụng (/[\u4e00-\u9fff]/.test) để kiểm tra, loại bỏ pinyin/ký tự Trung.\n*  Tôn trọng nguyên tác: Không thay đổi tình tiết, tính cách, logic.\n*  Kiểm tra chất lượng:\n   Nhất quán: Tên nhân vật, xưng hô không thay đổi trong văn bản.\n   Tự động kiểm tra: Scan lỗi pinyin (VD: 'nihao'), ký tự Trung (VD: 你好), thuật ngữ thô (VD: 'liền tựu thị').\n*   **TUYỆT ĐỐI KHÔNG** sử dụng Markdown (như **đậm**, *nghiêng*), không thêm bất kỳ ghi chú, lời bình, hay giải thích nào vào nội dung trả về.\n</ĐỊNH_DẠNG_ĐẦU_RA>\n\n<VÍ_DỤ>\n1.  **Ví dụ chuyển đổi tên người:**\n    | Tên gốc | Tên kết quả (Mục tiêu) |\n    |---|---|\n    | vương lâm | Vương Lâm |\n    | hách mễ lạp | Hermila |\n\n2.  **Ví dụ giữ nguyên tên riêng khác:**\n    | Tên gốc (Hán-Việt) | Tên kết quả (Mục tiêu) |\n    |---|---|\n    | thanh vân kiếm | Thanh Vân Kiếm |\n    | hắc ám sâm lâm | Hắc Ám Sâm Lâm |\n</VÍ_DỤ>";
+        const defaultPrompt3 = "<VAI_TRÒ>\nBạn là một **BIÊN TẬP VIÊN CHUYÊN NGHIỆP**. Nhiệm vụ của bạn là mài giũa một văn bản thô thành một tác phẩm hoàn chỉnh, mượt mà và dễ đọc.\n</VAI_TRÒ>\n\n<MỤC_TIÊU>\nBiên tập lại văn bản *convert* thô được cung cấp thành một tác phẩm tiếng Việt *mượt mà, tự nhiên và trôi chảy*. Mục tiêu chính là loại bỏ sự lủng củng, khó hiểu của văn bản gốc.\n</MỤC_TIÊU>\n\n<BỐI_CẢNH>\nNgười dùng sẽ cung cấp một văn bản convert. Bạn cần đóng vai trò là người biên tập cuối cùng, chỉ tập trung vào việc làm cho câu chữ hay hơn mà không thay đổi nội dung gốc.\n</BỐI_CẢNH>\n\n<RÀNG_BUỘC>\nĐây là những quy tắc **BẮT BUỘC** phải tuân thủ:\n\n1.  **LÀM MƯỢT CÂU VĂN:**\n    *   Viết lại các câu lủng củng, tối nghĩa, sai ngữ pháp.\n    *   Sắp xếp lại trật tự từ để câu văn nghe tự nhiên hơn theo văn phong tiếng Việt.\n\n2.  **VIỆT HÓA TỪ NGỮ:**\n    *   Chủ động thay thế các từ Hán-Việt không thông dụng hoặc không cần thiết bằng các từ thuần Việt tương đương.\n    *   *Ví dụ:* `thân hình hóa tác nhất đạo lưu quang` -> `thân hình hóa thành một vệt sáng`.\n\n3.  **TUYỆT ĐỐI BẢO TOÀN NỘI DUNG:**\n    *   **KHÔNG** thêm, bớt hay thay đổi cốt truyện, tình tiết, hành động.\n    *   **GIỮ NGUYÊN 100% TẤT CẢ TÊN RIÊNG** (nhân vật, địa danh, công pháp, vật phẩm...).\n</RÀNG_BUỘC>\n\n<ĐỊNH_DẠNG_ĐẦU_RA>\n*   **CHỈ** trả về văn bản tiếng Việt đã được viết lại.\n*   100% Việt hóa: Sử dụng (/[\u4e00-\u9fff]/.test) để kiểm tra, loại bỏ pinyin/ký tự Trung.\n*  Tôn trọng nguyên tác: Không thay đổi tình tiết, tính cách, logic.\n*  Kiểm tra chất lượng:\n   Nhất quán: Tên nhân vật, xưng hô không thay đổi trong văn bản.\n   Tự động kiểm tra: Scan lỗi pinyin (VD: 'nihao'), ký tự Trung (VD: 你好), thuật ngữ thô (VD: 'liền tựu thị').\n*   **TUYỆT ĐỐI KHÔNG** sử dụng Markdown (như **đậm**, *nghiêng*), không thêm bất kỳ ghi chú, lời bình, hay giải thích nào vào nội dung trả về.\n</ĐỊNH_DẠNG_ĐẦU_RA>\n\n<VÍ_DỤ>\n*   **Văn bản gốc (Convert):**\n    `Ngã tâm niệm nhất động, thân hình hóa tác nhất đạo lưu quang, hướng về viễn phương bạo xạ nhi khứ.`\n*   **Kết quả mong muốn (Đã biên tập):**\n    `Tâm niệm hắn khẽ động, thân hình hóa thành một vệt sáng, lao vút về phía xa.`\n</VÍ_DỤ>";
 
         for (let i = 0; i < languages.length; i++) {
             let langId = languages[i].id;
@@ -188,24 +178,11 @@ function execute(text, from, to) {
     if (!text || text.trim() === '') {
         return Response.success("?");
     }
-// Xử lý gộp key từ config và localStorage
     var combinedApiKeys = [].concat(apiKeys); 
-/*
-    try {
-        var localKeysString = cacheStorage.getItem('vp_key_list');
-        if (localKeysString) {
-            var localKeys = localKeysString.split('\n')
-                .map(function(key) { return key.trim(); })
-                .filter(function(key) { return key; }); 
-            if (localKeys.length > 0) {
-                combinedApiKeys = combinedApiKeys.concat(localKeys);
-            }
-        }
-    } catch (e) {}
-*/
-    var uniqueKeys = [];
-    var seenKeys = {};
-    for (var i = 0; i < combinedApiKeys.length; i++) {
+
+    let uniqueKeys = [];
+    let seenKeys = {};
+    for (let i = 0; i < combinedApiKeys.length; i++) {
         if (!seenKeys[combinedApiKeys[i]]) {
             seenKeys[combinedApiKeys[i]] = true;
             uniqueKeys.push(combinedApiKeys[i]);
@@ -217,8 +194,8 @@ function execute(text, from, to) {
     var rotatedApiKeys = combinedApiKeys; 
     try {
         if (combinedApiKeys && combinedApiKeys.length > 1) {
-            var lastUsedIndex = parseInt(cacheStorage.getItem(apiKeyStorageKey) || "-1");
-            var nextIndex = (lastUsedIndex + 1) % combinedApiKeys.length;
+            let lastUsedIndex = parseInt(cacheStorage.getItem(apiKeyStorageKey) || "-1");
+            let nextIndex = (lastUsedIndex + 1) % combinedApiKeys.length;
             rotatedApiKeys = combinedApiKeys.slice(nextIndex).concat(combinedApiKeys.slice(0, nextIndex));
             cacheStorage.setItem(apiKeyStorageKey, nextIndex.toString());
         }
@@ -229,7 +206,7 @@ function execute(text, from, to) {
     var lines = text.split('\n');
     
     if (to === 'PROMPT_xoacache') {
-            var cacheKeyToDelete = generateFingerprintCacheKey(lines);
+            let cacheKeyToDelete = generateFingerprintCacheKey(lines);
             if (cacheStorage.getItem(cacheKeyToDelete) !== null) {
                 cacheStorage.removeItem(cacheKeyToDelete);
                 return Response.success("Đã xóa cache của chương này thành công." + text);
@@ -237,9 +214,9 @@ function execute(text, from, to) {
         return Response.success(text); 
     }
 
-    var isShortTextOrList = false;
-    var lengthThreshold = 1000;   
-    var lineLengthThreshold = 25; 
+    let isShortTextOrList = false;
+    let lengthThreshold = 1000;   
+    let lineLengthThreshold = 25; 
     if (to === 'PROMPT_vietlai') {
         lengthThreshold = 1200;
         lineLengthThreshold = 50;
@@ -247,10 +224,10 @@ function execute(text, from, to) {
     if (text.length < lengthThreshold) {
         isShortTextOrList = true;
     } else {
-        var shortLinesCount = 0;
-        var totalLines = lines.length;
+        let shortLinesCount = 0;
+        let totalLines = lines.length;
         if (totalLines > 0) {
-            for (var i = 0; i < totalLines; i++) {
+            for (let i = 0; i < totalLines; i++) {
                 if (lines[i].length < lineLengthThreshold || lines[i].toLowerCase().includes("chương") || lines[i].includes("章")) { shortLinesCount++; }
             }
             if ((shortLinesCount / totalLines) > 0.7) {
@@ -263,10 +240,10 @@ function execute(text, from, to) {
     }
 
     var finalContent = "";
-    var useGeminiForShortText = false;
+    let useGeminiForShortText = false;
     
     if (isShortTextOrList) {
-        var basicLangs = ['zh', 'en', 'vi', 'auto'];
+        let basicLangs = ['zh', 'en', 'vi', 'auto'];
         if (basicLangs.indexOf(from) > -1 && basicLangs.indexOf(to) > -1) {
             useGeminiForShortText = true;
         }
@@ -274,12 +251,12 @@ function execute(text, from, to) {
 
     if (isShortTextOrList && !useGeminiForShortText) {
         const BAIDU_CHUNK_SIZE = 300;
-        var baiduTranslatedParts = [];
+        let baiduTranslatedParts = [];
 
-        for (var i = 0; i < lines.length; i += BAIDU_CHUNK_SIZE) {
-            var currentChunkLines = lines.slice(i, i + BAIDU_CHUNK_SIZE);
-            var chunkText = currentChunkLines.join('\n');
-            var translatedChunk = baiduTranslateContent(chunkText, from, to, 0); 
+        for (let i = 0; i < lines.length; i += BAIDU_CHUNK_SIZE) {
+            let currentChunkLines = lines.slice(i, i + BAIDU_CHUNK_SIZE);
+            let chunkText = currentChunkLines.join('\n');
+            let translatedChunk = baiduTranslateContent(chunkText, from, to, 0); 
             if (translatedChunk === null) {
                 return Response.error("Lỗi Baidu Translate. Vui lòng thử lại.");
             }
@@ -293,7 +270,7 @@ function execute(text, from, to) {
         if (!isShortTextOrList) {
              try {
                 cacheKey = generateFingerprintCacheKey(lines);
-                var cachedTranslation = cacheStorage.getItem(cacheKey);
+                let cachedTranslation = cacheStorage.getItem(cacheKey);
                 if (cachedTranslation) {
                     return Response.success(cachedTranslation);
                 }
@@ -302,9 +279,9 @@ function execute(text, from, to) {
             }
         }
         
-        var modelToUse = null;
+        let modelToUse = null;
         let useModelLoop = false;
-        var isPinyinRoute = false; 
+        let isPinyinRoute = false; 
 
         if (from.includes('gemini')) {
             modelToUse = from;
@@ -318,29 +295,28 @@ function execute(text, from, to) {
             isPinyinRoute = true;
         }
 
-        var selectedPrompt = prompts[to] || prompts['vi'];
+        let selectedPrompt = prompts[to] || prompts['vi'];
         
-        var translationSuccessful = false;
-        var errorLog = {};
-        var modelsToIterate = useModelLoop ? models : [modelToUse];
+        let translationSuccessful = false;
+        let errorLog = {};
+        let modelsToIterate = useModelLoop ? models : [modelToUse];
 
-        for (var m = 0; m < modelsToIterate.length; m++) {
-            var currentModel = modelsToIterate[m];
-            var CHUNK_SIZE = 5000;
-            var MIN_LAST_CHUNK_SIZE = 500;
+        for (let m = 0; m < modelsToIterate.length; m++) {
+            let currentModel = modelsToIterate[m];
+            let CHUNK_SIZE = 2000;
+            let MIN_LAST_CHUNK_SIZE = 500;
             if (currentModel === "gemini-2.5-pro") {
                 CHUNK_SIZE = 1500; MIN_LAST_CHUNK_SIZE = 100;
             } else if (currentModel === "gemini-2.5-flash" || currentModel === "gemini-2.5-flash-preview-09-2025" || currentModel === "gemini-2.0-flash-thinking-exp-01-21" || currentModel === "gemini-2.0-flash-exp") {
                 CHUNK_SIZE = 2000; MIN_LAST_CHUNK_SIZE = 100;
             } else if (currentModel === "gemini-2.0-flash-001" || currentModel === "gemini-2.0-flash-lite-001") {
-                CHUNK_SIZE = 4000; MIN_LAST_CHUNK_SIZE = 500;
+                CHUNK_SIZE = 2000; MIN_LAST_CHUNK_SIZE = 100;
             }
-            var textChunks = [];
-            var currentChunk = "";
-            var currentChunkLineCount = 0;
-//            const MAX_LINES_PER_CHUNK = 500;
-            for (var i = 0; i < lines.length; i++) {
-                var paragraph = lines[i];
+            let textChunks = [];
+            let currentChunk = "";
+            let currentChunkLineCount = 0;
+            for (let i = 0; i < lines.length; i++) {
+                let paragraph = lines[i];
                 if (currentChunk.length === 0 && paragraph.length >= CHUNK_SIZE) {
                     textChunks.push(paragraph);
                     continue;
@@ -356,14 +332,14 @@ function execute(text, from, to) {
             }
             if (currentChunk.length > 0) textChunks.push(currentChunk);
             if (textChunks.length > 1 && textChunks[textChunks.length - 1].length < MIN_LAST_CHUNK_SIZE) {
-                var lastChunk = textChunks.pop();
-                var secondLastChunk = textChunks.pop();
+                let lastChunk = textChunks.pop();
+                let secondLastChunk = textChunks.pop();
                 textChunks.push(secondLastChunk + "\n" + lastChunk);
             }
 
-            var finalParts = [];
-            var currentModelFailed = false;
-            for (var k = 0; k < textChunks.length; k++) {
+            let finalParts = [];
+            let currentModelFailed = false;
+            for (let k = 0; k < textChunks.length; k++) {
                 var chunkToSend = textChunks[k];
                 if (isPinyinRoute && !isShortTextOrList) {
                     try {
@@ -372,7 +348,7 @@ function execute(text, from, to) {
                     } catch (e) { return Response.error("LỖI: Không thể tải file phienam.js."); }
                 }
 
-                var chunkResult = translateChunkWithApiRetry(chunkToSend, selectedPrompt, currentModel, rotatedApiKeys, from, to);
+                let chunkResult = translateChunkWithApiRetry(chunkToSend, selectedPrompt, currentModel, rotatedApiKeys, from, to);
                 if (chunkResult.status === 'success') {
                     finalParts.push(chunkResult.data);
                 } else {
@@ -382,7 +358,7 @@ function execute(text, from, to) {
                 }
             }
             if (!currentModelFailed) {
-                finalContent = finalParts.join('\n\n'); //modelsucess + " . " + 
+                finalContent = finalParts.join('\n\n'); 
                 finalContent = finalContent.replace(/\*/g, '').trim();
                 translationSuccessful = true;
                 break; 
@@ -390,8 +366,8 @@ function execute(text, from, to) {
         } 
 
         if (!translationSuccessful) {
-            var errorString = "<<<<<--- LỖI DỊCH --->>>>>\n";
-            for (var modelName in errorLog) {
+            let errorString = "<<<<<--- LỖI DỊCH --->>>>>\n";
+            for (let modelName in errorLog) {
                 errorString += "\n--- Lỗi với Model: " + modelName + " ---\n";
                 if(errorLog[modelName]) errorString += errorLog[modelName].join("\n");
             }
