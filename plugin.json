@@ -7,7 +7,7 @@
     {
       "name": "Gemini Baidu Translate change Model V2.0",
       "author": "3690",
-      "version": 64,
+      "version": 65,
       "source": "https://aistudio.google.com/apikey",
       "path": "https://raw.githubusercontent.com/gh369-639/vbook-ext-public/main/Gemini-Baidu-translate-change-model-V2/plugin.zip",
       "icon": "https://raw.githubusercontent.com/gh369-639/vbook-ext-public/main/Gemini-Baidu-translate-change-model-V2/icon.png",
@@ -31,7 +31,7 @@
       "name": "alicesw",
       "author": "3690",
       "path": "https://raw.githubusercontent.com/gh369-639/vbook-ext-public/main/alicesw/plugin.zip",
-      "version": 44,
+      "version": 45,
       "source": "https://www.alicesw.com",
       "icon": "https://raw.githubusercontent.com/gh369-639/vbook-ext-public/main/alicesw/icon.png",
       "description": "Đọc truyện trên alicesw.com",
