@@ -5,15 +5,15 @@
   },
   "data": [
     {
-      "name": "Gemini Baidu Translate change Model V2.0",
+      "name": "Qwen Translate change Model V2.0",
       "author": "3690",
-      "version": 81,
-      "source": "https://aistudio.google.com/apikey",
-      "path": "https://raw.githubusercontent.com/gh369-639/vbook-ext-public/main/Gemini-Baidu-translate-change-model-V2/plugin.zip",
-      "icon": "https://raw.githubusercontent.com/gh369-639/vbook-ext-public/main/Gemini-Baidu-translate-change-model-V2/icon.png",
-      "description": "Dịch văn bản bằng Google Gemini API với nhiều key, prompt, tùy chỉnh theo thể loại và xử lý lỗi an toàn thông minh. DONATE CHO ADMIN VBOOK NHIỀU LÊN ĐỂ VỪA CÓ TÊN ĐẸP, ADMIN LẠI CÓ THÊM ĐỘNG LỰC HOÀN THIỆN APP",
+      "version": 82,
+      "source": "https://dashscope.aliyun.com",
+      "path": "https://raw.githubusercontent.com/vtungo7/vbook-ext-public1/main/Qwen-translate/plugin.zip",
+      "icon": "https://raw.githubusercontent.com/vtungo7/vbook-ext-public1/main/Qwen-translate/icon.png",
+      "description": "Dịch văn bản bằng Qwen API (Alibaba DashScope) với nhiều key, prompt, tùy chỉnh theo thể loại và xử lý lỗi an toàn thông minh. Thay thế Gemini API bằng Qwen - giữ nguyên toàn bộ tính năng. DONATE CHO ADMIN VBOOK NHIỀU LÊN ĐỂ VỪA CÓ TÊN ĐẸP, ADMIN LẠI CÓ THÊM ĐỘNG LỰC HOÀN THIỆN APP",
       "type": "translate",
-      "encrypt": true
+      "encrypt": false
     },
     {
       "name": "drxsw",
