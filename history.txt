@@ -16,6 +16,18 @@
       "encrypt": true
     },
     {
+      "name": "drxsw",
+      "author": "3690",
+      "version": 5,
+      "source": "https://www.drxsw.com/",
+      "path": "https://raw.githubusercontent.com/gh369-639/vbook-ext-public/main/drxsw/plugin.zip",
+      "icon": "https://raw.githubusercontent.com/gh369-639/vbook-ext-public/main/drxsw/icon.png",
+      "description": "Đọc truyện trên drxsw.com",
+      "type": "chinese_novel",
+      "locale": "zh_CN",
+      "tag": "nsfw"
+    },
+    {
       "name": "alicesw",
       "author": "3690",
       "path": "https://raw.githubusercontent.com/gh369-639/vbook-ext-public/main/alicesw/plugin.zip",
@@ -26,6 +38,40 @@
       "type": "chinese_novel",
       "locale": "zh_CN",
       "tag": "nsfw"
+    },
+    {
+      "name": "Sinodan",
+      "author": "3690",
+      "path": "https://raw.githubusercontent.com/gh369-639/vbook-ext-public/main/Sinodan/plugin.zip",
+      "version": 17,
+      "source": "https://www.sinodan.link",
+      "icon": "https://raw.githubusercontent.com/gh369-639/vbook-ext-public/main/Sinodan/icon.png",
+      "description": "Đọc truyện trên sinodan.link",
+      "type": "novel",
+      "locale": "zh_CN",
+      "tag": "nsfw"
+    },
+    {
+      "name": "Wattpad",
+      "author": "3690",
+      "path": "https://raw.githubusercontent.com/gh369-639/vbook-ext-public/main/wattpad/plugin.zip",
+      "version": 1,
+      "source": "https://wattpad.com",
+      "icon": "https://raw.githubusercontent.com/gh369-639/vbook-ext-public/main/wattpad/icon.png",
+      "description": "noDes",
+      "type": "novel",
+      "locale": "vi_VN"
+    },
+    {
+      "name": "MeTruyenChuFake",
+      "author": "3690",
+      "path": "https://raw.githubusercontent.com/gh369-639/vbook-ext-public/main/MeTruyenChu/plugin.zip",
+      "version": 1,
+      "source": "https://metruyenchu.com.vn/",
+      "icon": "https://raw.githubusercontent.com/gh369-639/vbook-ext-public/main/MeTruyenChu/icon.png",
+      "description": "noDes",
+      "type": "novel",
+      "locale": "vi_VN"
     },
     {
       "name": "Misskon",
@@ -49,6 +95,18 @@
       "description": "noDes",
       "type": "comic",
       "locale": "zh_CN",
+      "tag": "nsfw"
+    },
+    {
+      "name": "Truyện sexTV",
+      "author": "3690",
+      "path": "https://raw.githubusercontent.com/gh369-639/vbook-ext-public/main/xtv2/plugin.zip",
+      "version": 4,
+      "source": "https://truyensextv99.com",
+      "icon": "https://raw.githubusercontent.com/gh369-639/vbook-ext-public/main/xtv2/icon.png",
+      "description": "Đọc truyện sex",
+      "type": "novel",
+      "locale": "vi_VN",
       "tag": "nsfw"
     }
   ]
